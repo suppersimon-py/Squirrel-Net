@@ -10,7 +10,7 @@ This is my journal of the design and building process of **Squirrel Net**.
 You can view this journal in more detail on **Hack Club Blueprint** [here](https://blueprint.hackclub.com/projects/712).
 
 
-## 10/19/2025 - Intro and Design Considerations  
+## 10/19/2025 10 AM - Intro and Design Considerations  
 
 ![SupperSimon.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzM4MSwicHVyIjoiYmxvYl9pZCJ9fQ==--35758493b53c23baa459cf0f346f08c3996becdd/SupperSimon.png)
 I am fascinated by all forms of decentralized communication, such as Amateur radio and Packet Radio, so when I learned about **LoRaWAN (Long Range Wide Area Network)** operating in part of the 33cm ham band (In the US) but requiring **no license**, I was hooked.
@@ -32,4 +32,34 @@ I started off with a **Heltec V3** and 2 custom **Raspberry Pi Pico** setups as 
 ### 3. Power Management
 - **3.3V for MCU and communication** to keep it simple, I chose a linear regulator, the AP2112K-3.3.
 - **Battery Management** I've used the TP4056 in the past with good results, when set up correctly, only requiring a resistor change to change the charging current limit.  
+
+## 10/19/2025 3 PM - Power Management Schematic  
+
+### Implemented USBLC6-2SC6, TP4056, DW01A, and AP2122K-3.3
+**USBLC6-2SC6**
+- ESD protection for the **USB-C** charging/data port using the USBLC6-2SC6 to protect both data lines and VBUS.
+
+**TP4056**
+- Manages charging current limit, set by pulling PROG to GND.
+- I am using a solder bridge to allow me to switch between 400mA and 1A  charge current without resoldering resistors.
+
+
+**DW01A**
+- Battery protection IC used as an overcharge and over-discharge shutoff.
+- Required 2 MOSFETs to close/open BAT- to GND.
+
+
+**AP2112K-3.3**
+- Regulates Battery output to 3.3V
+- Switched EN pin
+
+USB-C protection:
+![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzQzMSwicHVyIjoiYmxvYl9pZCJ9fQ==--278e110b8e04d8a631af82e14db4f4d9b669c153/image.png)
+Charge/Discharge Protection:
+![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzQ4NiwicHVyIjoiYmxvYl9pZCJ9fQ==--a0c9bf54b2bd1504d2ed7ea344aefe466544a203/image.png)
+Solder Bridge:
+![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzQ4OCwicHVyIjoiYmxvYl9pZCJ9fQ==--59a77eb8b0ce8af402928423b13d31122c1a2ac8/image.png)
+Full Schematic:
+![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzQ4OSwicHVyIjoiYmxvYl9pZCJ9fQ==--57ab9561f80f8a8a6cc9ea3f12c936a3da4ca792/image.png)
+  
 
