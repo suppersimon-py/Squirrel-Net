@@ -57,7 +57,7 @@ USB-C protection:
 ![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzQzMSwicHVyIjoiYmxvYl9pZCJ9fQ==--278e110b8e04d8a631af82e14db4f4d9b669c153/image.png)
 Charge/Discharge Protection:
 ![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzQ4NiwicHVyIjoiYmxvYl9pZCJ9fQ==--a0c9bf54b2bd1504d2ed7ea344aefe466544a203/image.png)
-Solder Bridge:
+Current set, Solder Bridge:
 ![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzQ4OCwicHVyIjoiYmxvYl9pZCJ9fQ==--59a77eb8b0ce8af402928423b13d31122c1a2ac8/image.png)
 Full Schematic:
 ![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzQ4OSwicHVyIjoiYmxvYl9pZCJ9fQ==--57ab9561f80f8a8a6cc9ea3f12c936a3da4ca792/image.png)
