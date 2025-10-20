@@ -16,15 +16,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      # 2. Debug workspace & create firmware folder
-      - name: Setup firmware folder
-        run: |
-          echo "Workspace: $GITHUB_WORKSPACE"
-          ls -la
-          mkdir -p $GITHUB_WORKSPACE/firmware
-          echo "Firmware folder created"
+      # 2. Create firmware folder
+      - name: Create firmware folder
+        run: mkdir -p ${{ github.workspace }}/firmware
 
-      # 3. Install dependencies (PlatformIO only, gh CLI already included)
+      # 3. Install dependencies (PlatformIO only)
       - name: Install dependencies
         run: |
           sudo apt-get update
@@ -36,8 +32,8 @@ jobs:
         id: meshtastic_release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        working-directory: ${{ github.workspace }}/firmware
         run: |
-          cd $GITHUB_WORKSPACE/firmware
           rm -rf meshtastic
           # Get latest non-dev tag
           LATEST_TAG=$(gh release list --repo meshtastic/firmware --limit 20 \
@@ -54,8 +50,8 @@ jobs:
       # 5. Sync SquirrelCore variant if present
       - name: Sync SquirrelCore variant
         run: |
-          VARIANT_SRC=$GITHUB_WORKSPACE/firmware/variants/SquirrelCore
-          VARIANT_DST=$GITHUB_WORKSPACE/firmware/meshtastic/variants/SquirrelCore
+          VARIANT_SRC=${{ github.workspace }}/firmware/variants/SquirrelCore
+          VARIANT_DST=${{ github.workspace }}/firmware/meshtastic/variants/SquirrelCore
           if [ -d "$VARIANT_SRC" ]; then
             echo "SquirrelCore variant found, syncing..."
             mkdir -p $VARIANT_DST
@@ -69,7 +65,7 @@ jobs:
         if: ${{ success() }}
         working-directory: ${{ github.workspace }}/firmware/meshtastic
         run: |
-          if [ -d "$GITHUB_WORKSPACE/firmware/variants/SquirrelCore" ]; then
+          if [ -d "${{ github.workspace }}/firmware/variants/SquirrelCore" ]; then
             echo "Building firmware for SquirrelCore..."
             platformio run -e SquirrelCore
           else
@@ -98,6 +94,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: |
-            $GITHUB_WORKSPACE/firmware/meshtastic/.pio/build/SquirrelCore/firmware.uf2
-            $GITHUB_WORKSPACE/firmware/meshtastic/.pio/build/SquirrelCore/firmware.bin
-            $GITHUB_WORKSPACE/firmware/meshtastic/.pio/build/SquirrelCore/firmware.elf
+            ${{ github.workspace }}/firmware/meshtastic/.pio/build/SquirrelCore/firmware.uf2
+            ${{ github.workspace }}/firmware/meshtastic/.pio/build/SquirrelCore/firmware.bin
+            ${{ github.workspace }}/firmware/meshtastic/.pio/build/SquirrelCore/firmware.elf
