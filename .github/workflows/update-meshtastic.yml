@@ -25,7 +25,8 @@ jobs:
 
       # 3. Authenticate GitHub CLI
       - name: Authenticate GitHub CLI
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
 
       # 4. Prepare firmware folder
       - name: Prepare firmware folder
@@ -36,20 +37,30 @@ jobs:
           [ -d meshtastic ] && rm -rf meshtastic
 
       # 5. Fetch latest stable Meshtastic release
-      - name: Fetch latest Meshtastic release
+      - name: Fetch latest stable Meshtastic release
         id: meshtastic_release
         working-directory: ${{ github.workspace }}/firmware
         run: |
-          # Get latest non-dev tag
+          set -e
+          gh auth status || gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
+          
+          # Get the latest non-dev release
           LATEST_TAG=$(gh release list --repo meshtastic/firmware --limit 20 \
-            | grep -v "dev" | grep -m1 -oP '^v[0-9]+\.[0-9]+\.[0-9]+')
+            | grep -v "dev" | head -n1 | awk '{print $1}')
+          
+          if [ -z "$LATEST_TAG" ]; then
+            echo "Error: Could not determine latest Meshtastic release!"
+            exit 1
+          fi
+
           echo "Latest Meshtastic release: $LATEST_TAG"
           echo "meshtastic_version=$LATEST_TAG" >> $GITHUB_OUTPUT
 
           # Download and extract source
           gh release download "$LATEST_TAG" --repo meshtastic/firmware \
             --pattern 'source.tar.gz' --output meshtastic.tar.gz
-          mkdir meshtastic
+
+          mkdir -p meshtastic
           tar -xzf meshtastic.tar.gz -C meshtastic --strip-components=1
           rm meshtastic.tar.gz
 
@@ -78,9 +89,20 @@ jobs:
             echo "SquirrelCore variant folder missing, skipping build."
             exit 0
 
-      # 8. Create GitHub Release
+      # 8. Check if release already exists
+      - name: Check for existing release
+        id: check_release
+        run: |
+          RELEASE_TAG="SquirrelCore-${{ steps.meshtastic_release.outputs.meshtastic_version }}"
+          if gh release view "$RELEASE_TAG" --repo $GITHUB_REPOSITORY; then
+            echo "Release $RELEASE_TAG already exists, skipping creation."
+            echo "release_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "release_exists=false" >> $GITHUB_OUTPUT
+
+      # 9. Create GitHub Release
       - name: Create GitHub Release
-        if: ${{ success() }}
+        if: steps.check_release.outputs.release_exists == 'false'
         id: create_release
         uses: actions/create-release@v1
         env:
@@ -92,9 +114,9 @@ jobs:
           draft: false
           prerelease: false
 
-      # 9. Upload firmware binaries
+      # 10. Upload firmware binaries
       - name: Upload firmware assets
-        if: ${{ success() }}
+        if: steps.check_release.outputs.release_exists == 'false'
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
