@@ -5,8 +5,8 @@
   <h2 align="center">Squirrel-Net</h2>
   <h2 align="center"> Meshtastic powered mesh node using fully embedded hardware</h2>
   <p>
-    [Get Started](https://example.com/get-started) <br/>
-    🔧 [Building Instructions](https://meshtastic.org/docs/development/firmware/build) – Learn how to compile the firmware from source. <br/>
+    Get Started
+    🔧 [Building Instructions](https://meshtastic.org/docs/development/firmware/build) – Learn how to compile the firmware from source.
     ⚡ [Flashing Instructions]([https://example.com/flash](https://meshtastic.org/docs/getting-started/flashing-firmware/)) – Install or update the firmware on your device.
   </p>
 </div>
