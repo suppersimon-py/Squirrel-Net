@@ -4,7 +4,21 @@
   </a>
 
   <h2>Squirrel-Net</h2>
-  <h2>Meshtastic powered mesh node using fully embedded hardware</h2>
+  <p>
+    This project is for a open source PCB called SquirrelCore using an ESP32-S3 and SX1262, 
+    SquirrelCore is designed as a long range mesh client/node/repearter.
+
+    Features:
+    - ESP32-S3
+    - 8MB Flash
+    - LoRaWAN, Wi-Fi, Bluetooth, and USB-C serial
+    - Ajustable 400mA and 1A baattery charging
+    - OLED display
+    - BME280
+    - GPS
+    
+  </p>
+  <h2>Meshtastic powered node using mostly embedded hardware</h2>
   
   <p>
     <h3>Meshhtastic Links</h3>
