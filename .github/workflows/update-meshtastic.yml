@@ -3,11 +3,12 @@ name: Update, Build, and Release SquirrelCore Firmware
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 6 * * *" # daily at 6 AM UTC, optional
+    - cron: "0 6 * * *" # daily at 6 AM UTC
 
 jobs:
   build-release:
     runs-on: ubuntu-latest
+
     steps:
 
       # 1. Checkout repository
@@ -20,20 +21,26 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y git gh python3 python3-pip
-          pip install -U platformio
+          sudo apt-get install -y git python3 python3-pip
+          pip install -U platformio gh
 
       # 3. Fetch latest stable Meshtastic release
       - name: Fetch latest stable Meshtastic release
         id: meshtastic_release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           mkdir -p firmware
           cd firmware
           rm -rf meshtastic
-          LATEST_TAG=$(gh release list --repo meshtastic/firmware --limit 20 | grep -v "dev" | grep -m1 -oP '^v[0-9]+\.[0-9]+\.[0-9]+')
+          # Get latest non-dev tag
+          LATEST_TAG=$(gh release list --repo meshtastic/firmware --limit 20 \
+            | grep -v "dev" | grep -m1 -oP '^v[0-9]+\.[0-9]+\.[0-9]+')
           echo "Latest Meshtastic release: $LATEST_TAG"
           echo "meshtastic_version=$LATEST_TAG" >> $GITHUB_OUTPUT
-          gh release download "$LATEST_TAG" --repo meshtastic/firmware --pattern 'source.tar.gz' --output meshtastic.tar.gz
+          # Download source tar.gz
+          gh release download "$LATEST_TAG" --repo meshtastic/firmware \
+            --pattern 'source.tar.gz' --output meshtastic.tar.gz
           mkdir meshtastic
           tar -xzf meshtastic.tar.gz -C meshtastic --strip-components=1
           rm meshtastic.tar.gz
@@ -47,35 +54,41 @@ jobs:
           else
             echo "SquirrelCore variant folder not found, skipping build."
             exit 0
-          fi
-
+          
       # 5. Build SquirrelCore firmware
       - name: Build firmware for SquirrelCore
+        if: ${{ success() }}
         working-directory: firmware/meshtastic
         run: |
-          echo "Building firmware for SquirrelCore..."
-          platformio run -e SquirrelCore
+          if [ -d "../../variants/SquirrelCore" ]; then
+            echo "Building firmware for SquirrelCore..."
+            platformio run -e SquirrelCore
+          else
+            echo "SquirrelCore variant folder missing, skipping build."
+            exit 0
 
       # 6. Create GitHub Release if build succeeded
       - name: Create GitHub Release
+        if: ${{ success() }}
         id: create_release
         uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: "SquirrelCore-${{ steps.meshtastic_release.outputs.meshtastic_version }}"
           release_name: "SquirrelCore firmware ${{ steps.meshtastic_release.outputs.meshtastic_version }}"
           body: "Automated firmware build for SquirrelCore based on Meshtastic ${{ steps.meshtastic_release.outputs.meshtastic_version }}"
           draft: false
           prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # 7. Upload firmware binaries to the release
       - name: Upload firmware assets
+        if: ${{ success() }}
         uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: |
             firmware/meshtastic/.pio/build/SquirrelCore/firmware.uf2
             firmware/meshtastic/.pio/build/SquirrelCore/firmware.bin
             firmware/meshtastic/.pio/build/SquirrelCore/firmware.elf
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
