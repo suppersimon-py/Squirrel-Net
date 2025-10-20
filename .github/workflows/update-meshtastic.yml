@@ -1,43 +1,62 @@
 name: Update Meshtastic Firmware
 
 on:
-  workflow_dispatch:        # Allow manual trigger from the Actions tab
+  workflow_dispatch:        # Allow manual trigger from GitHub UI
   schedule:
-    - cron: '0 0 * * 1'     # Run weekly (every Monday at 00:00 UTC)
+    - cron: '0 0 * * 1'     # Runs every Monday at 00:00 UTC
 
 jobs:
   update:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write        # Required to push updates back
 
     steps:
-      - name: Checkout your repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Download latest stable Meshtastic release
-        id: get_release
-        uses: robinraju/release-downloader@v1
-        with:
-          repository: "meshtastic/firmware"
-          latest: true
-          preRelease: false         # This ensures we skip dev/nightly builds
-          fileName: "*.zip"
-          out-file-path: "firmware/meshtastic"
-
-      - name: Unzip firmware
+      - name: Fetch latest stable Meshtastic release tag
+        id: get_tag
         run: |
-          cd firmware/meshtastic
-          unzip -o *.zip -d .
-          rm *.zip
+          echo "Fetching latest Meshtastic stable release..."
+          TAG=$(curl -s https://api.github.com/repos/meshtastic/firmware/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+          echo "Latest release tag: $TAG"
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
 
-      - name: Apply custom variant folder
+      - name: Check if this tag already exists
+        id: check_existing
+        run: |
+          TAG=${{ steps.get_tag.outputs.tag }}
+          if git log -1 --pretty=%B | grep -q "$TAG"; then
+            echo "Latest release ($TAG) already present. Skipping update."
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Download and extract Meshtastic firmware
+        if: steps.check_existing.outputs.skip == 'false'
+        run: |
+          TAG=${{ steps.get_tag.outputs.tag }}
+          mkdir -p firmware/meshtastic
+          echo "Downloading source archive for $TAG..."
+          curl -L -o firmware/meshtastic/meshtastic.tar.gz \
+            https://github.com/meshtastic/firmware/archive/refs/tags/$TAG.tar.gz
+          cd firmware/meshtastic
+          tar -xzf meshtastic.tar.gz --strip-components=1
+          rm meshtastic.tar.gz
+
+      - name: Apply custom variants
+        if: steps.check_existing.outputs.skip == 'false'
         run: |
           mkdir -p firmware/variants
           rsync -av firmware/variants/ firmware/meshtastic/variants/ --ignore-existing
 
       - name: Commit and push updated firmware
+        if: steps.check_existing.outputs.skip == 'false'
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add firmware/meshtastic
-          git commit -m "Auto-update Meshtastic to latest stable release" || echo "No changes to commit"
+          git commit -m "Auto-update Meshtastic to ${{ steps.get_tag.outputs.tag }}" || echo "No changes to commit"
           git push
