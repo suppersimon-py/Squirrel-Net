@@ -81,3 +81,19 @@ design notes:
 Full Schematic:
 ![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzYyNywicHVyIjoiYmxvYl9pZCJ9fQ==--c31e2958255602579ca37d0eb3934336d58835bd/image.png)  
 
+## 10/20/2025 - SX1262 Schematic  
+
+I followed the reference schematic for the **SX1262** provided in the data sheet. Although I do not need the RF switch, I left it in to make it easier to impedance match later, following more reference models.
+
+Reference schematic:
+![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzczMywicHVyIjoiYmxvYl9pZCJ9fQ==--2544cef5082cc9d9feb8bb6f3e50a7bd8aa1497a/image.png)
+
+I set all values to reflect 915MHz used in the US. I may go through the effort of making different versions for other locations, but for now, my schematic is only for North America, South America, and Australia.
+
+Frequency map for LoRa:
+![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzczOCwicHVyIjoiYmxvYl9pZCJ9fQ==--67fb247f291122792c31ad136f5e619f54231f96/image.png)
+
+My Schematic:
+![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzczNiwicHVyIjoiYmxvYl9pZCJ9fQ==--3af8008c079c7ed920c836316d9bd3c57877a5e0/image.png)
+  
+
