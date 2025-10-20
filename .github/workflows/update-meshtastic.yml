@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y git python3 python3-pip gh
+          sudo apt-get install -y git python3 python3-pip jq gh
           pip install -U platformio
 
       # 3. Authenticate GitHub CLI
@@ -42,15 +42,17 @@ jobs:
         working-directory: ${{ github.workspace }}/firmware
         run: |
           set -e
+
+          # Authenticate if needed
           gh auth status || gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
-          
-          # Get the latest non-dev release
-          LATEST_TAG=$(gh release list --repo meshtastic/firmware --limit 20 \
-            | grep -v "dev" | head -n1 | awk '{print $1}')
-          
+
+          # Get latest non-dev release using JSON
+          LATEST_TAG=$(gh release list --repo meshtastic/firmware --limit 20 --json tagName \
+            | jq -r '.[] | select(.tagName | test("dev") | not) | .tagName' | head -n1)
+
           if [ -z "$LATEST_TAG" ]; then
-            echo "Error: Could not determine latest Meshtastic release!"
-            exit 1
+              echo "Error: Could not determine latest Meshtastic release!"
+              exit 1
           fi
 
           echo "Latest Meshtastic release: $LATEST_TAG"
