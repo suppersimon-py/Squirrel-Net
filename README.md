@@ -12,14 +12,15 @@
 <div align="left">
   <p>
     Features:
-    - ESP32-S3
-    - 8MB Flash
-    - LoRaWAN, Wi-Fi, Bluetooth, and USB-C serial
-    - Ajustable 400mA and 1A baattery charging
-    - OLED display
-    - BME280
-    - GPS
-    
+    <ul>
+      <li>ESP32-S3</li>
+      <li>8MB Flash</li>
+      <li>LoRaWAN, Wi-Fi, Bluetooth, and USB-C serial</li>
+      <li>Adjustable 400mA and 1A battery charging</li>
+      <li>OLED display</li>
+      <li>BME280 sensor</li>
+      <li>GPS module</li>
+    </ul>
   </p>
 </div>
 <div align="center">
