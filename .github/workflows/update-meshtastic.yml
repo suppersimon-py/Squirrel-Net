@@ -1,18 +1,16 @@
-name: Update & Build Meshtastic (SquirrelCore)
+name: Update, Build, and Release SquirrelCore Firmware
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ main ]
   schedule:
-    - cron: "0 6 * * *" # Daily at 6 AM UTC – optional
+    - cron: "0 6 * * *" # daily at 6 AM UTC, optional
 
 jobs:
-  update-and-build:
+  build-release:
     runs-on: ubuntu-latest
-
     steps:
-      # 1. Checkout your repo
+
+      # 1. Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
@@ -27,50 +25,57 @@ jobs:
 
       # 3. Fetch latest stable Meshtastic release
       - name: Fetch latest stable Meshtastic release
+        id: meshtastic_release
         run: |
+          mkdir -p firmware
           cd firmware
           rm -rf meshtastic
           LATEST_TAG=$(gh release list --repo meshtastic/firmware --limit 20 | grep -v "dev" | grep -m1 -oP '^v[0-9]+\.[0-9]+\.[0-9]+')
-          echo "Using Meshtastic firmware tag: $LATEST_TAG"
+          echo "Latest Meshtastic release: $LATEST_TAG"
+          echo "meshtastic_version=$LATEST_TAG" >> $GITHUB_OUTPUT
           gh release download "$LATEST_TAG" --repo meshtastic/firmware --pattern 'source.tar.gz' --output meshtastic.tar.gz
           mkdir meshtastic
           tar -xzf meshtastic.tar.gz -C meshtastic --strip-components=1
           rm meshtastic.tar.gz
 
-      # 4. Sync your custom SquirrelCore variant into Meshtastic
-      - name: Sync custom variant
+      # 4. Sync SquirrelCore variant if present
+      - name: Sync SquirrelCore variant (optional)
         run: |
-          rsync -av --delete firmware/variants/SquirrelCore/ firmware/meshtastic/variants/SquirrelCore/
+          if [ -d "firmware/variants/SquirrelCore" ]; then
+            echo "SquirrelCore variant found, copying..."
+            rsync -av --delete firmware/variants/SquirrelCore/ firmware/meshtastic/variants/SquirrelCore/
+          else
+            echo "SquirrelCore variant folder not found, skipping build."
+            exit 0
+          fi
 
-      # 5. Build the SquirrelCore firmware
+      # 5. Build SquirrelCore firmware
       - name: Build firmware for SquirrelCore
         working-directory: firmware/meshtastic
         run: |
           echo "Building firmware for SquirrelCore..."
           platformio run -e SquirrelCore
 
-      # 6. Upload firmware binaries as workflow artifacts
-      - name: Upload firmware artifacts
-        uses: actions/upload-artifact@v4
+      # 6. Create GitHub Release if build succeeded
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
         with:
-          name: SquirrelCore-firmware-${{ github.run_number }}
-          path: |
+          tag_name: "SquirrelCore-${{ steps.meshtastic_release.outputs.meshtastic_version }}"
+          release_name: "SquirrelCore firmware ${{ steps.meshtastic_release.outputs.meshtastic_version }}"
+          body: "Automated firmware build for SquirrelCore based on Meshtastic ${{ steps.meshtastic_release.outputs.meshtastic_version }}"
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # 7. Upload firmware binaries to the release
+      - name: Upload firmware assets
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
             firmware/meshtastic/.pio/build/SquirrelCore/firmware.uf2
             firmware/meshtastic/.pio/build/SquirrelCore/firmware.bin
             firmware/meshtastic/.pio/build/SquirrelCore/firmware.elf
-
-      # 7. (Optional) Commit firmware to firmware-builds branch
-      - name: Commit firmware to firmware-builds branch
-        if: success()
-        run: |
-          cd firmware/meshtastic
-          mkdir -p ../../builds/${{ github.run_number }}
-          cp .pio/build/SquirrelCore/firmware.* ../../builds/${{ github.run_number }}/
-
-          cd ../../
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-
-          git add builds/
-          git commit -m "Add SquirrelCore firmware build #${{ github.run_number }}"
-          git push origin HEAD:firmware-builds || echo "Branch push skipped (no changes or branch missing)"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
