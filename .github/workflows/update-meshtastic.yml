@@ -1,25 +1,25 @@
 name: Update Meshtastic Firmware
 
 on:
+  workflow_dispatch:        # Allow manual trigger from the Actions tab
   schedule:
-    - cron: '0 0 * * 1'  # Check weekly for new releases
-  workflow_dispatch:      # Allow manual runs
+    - cron: '0 0 * * 1'     # Run weekly (every Monday at 00:00 UTC)
 
 jobs:
   update:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout your repo
+      - name: Checkout your repository
         uses: actions/checkout@v4
 
-      - name: Get latest Meshtastic stable release
+      - name: Download latest stable Meshtastic release
         id: get_release
         uses: robinraju/release-downloader@v1
         with:
           repository: "meshtastic/firmware"
           latest: true
-          preRelease: false         # This ensures ONLY stable releases
+          preRelease: false         # This ensures we skip dev/nightly builds
           fileName: "*.zip"
           out-file-path: "firmware/meshtastic"
 
@@ -29,8 +29,9 @@ jobs:
           unzip -o *.zip -d .
           rm *.zip
 
-      - name: Apply custom variant
+      - name: Apply custom variant folder
         run: |
+          mkdir -p firmware/variants
           rsync -av firmware/variants/ firmware/meshtastic/variants/ --ignore-existing
 
       - name: Commit and push updated firmware
