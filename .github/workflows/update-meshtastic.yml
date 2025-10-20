@@ -1,113 +1,51 @@
-name: Build and Release SquirrelCore Firmware
+name: Build SquirrelCore Firmware
 
 on:
+  push:
+    branches: [ main ]
   workflow_dispatch:
   schedule:
-    - cron: "0 6 * * *" # daily at 6 AM UTC
+    - cron: '0 3 * * *'  # optional daily check at 03:00 UTC
 
 jobs:
-  build-release:
+  build-firmware:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout this repo
       - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v3
 
-      # 2. Install dependencies
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y git python3 python3-pip jq gh unzip
-          pip install -U platformio
+          sudo apt-get install -y git python3 python3-pip jq
+          pip3 install platformio
 
-      # 3. Authenticate GitHub CLI
-      - name: Authenticate GitHub CLI
+      - name: Fetch latest stable Meshtastic release
+        id: meshtastic
         run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
-
-      # 4. Prepare firmware folder
-      - name: Prepare firmware folder
-        run: |
-          mkdir -p firmware
-          cd firmware
-          [ -d meshtastic ] && rm -rf meshtastic
-
-      # 5. Clone latest stable Meshtastic release
-      - name: Clone latest stable Meshtastic release
-        id: meshtastic_release
-        run: |
-          # Get latest non-dev tag
-          LATEST_TAG=$(gh release list --repo meshtastic/firmware --limit 20 --json tagName \
-            | jq -r '.[] | select(.tagName | test("dev") | not) | .tagName' | head -n1)
-
-          if [ -z "$LATEST_TAG" ]; then
-              echo "Error: Could not determine latest Meshtastic release!"
-              exit 1
-          fi
-
+          # Get latest stable tag (no dev)
+          LATEST_TAG=$(git ls-remote --tags https://github.com/meshtastic/firmware.git \
+            | awk -F/ '{print $3}' | grep -v "dev" | sort -V | tail -n1)
           echo "Latest Meshtastic release: $LATEST_TAG"
           echo "meshtastic_version=$LATEST_TAG" >> $GITHUB_OUTPUT
 
-          # Clone repo at the tag
-          git clone --branch "$LATEST_TAG" --depth 1 https://github.com/meshtastic/firmware.git meshtastic
+          # Clone the source at that tag
+          git clone --branch $LATEST_TAG --depth 1 https://github.com/meshtastic/firmware.git meshtastic
 
-      # 6. Sync SquirrelCore variant if present
-      - name: Sync SquirrelCore variant
+      - name: Add SquirrelCore variant
         run: |
-          VARIANT_SRC=${{ github.workspace }}/firmware/variants/SquirrelCore
-          VARIANT_DST=${{ github.workspace }}/firmware/meshtastic/variants/SquirrelCore
-          if [ -d "$VARIANT_SRC" ]; then
-            echo "SquirrelCore variant found, syncing..."
-            mkdir -p "$VARIANT_DST"
-            rsync -av --delete "$VARIANT_SRC/" "$VARIANT_DST/"
-          else
-            echo "SquirrelCore variant folder not found, skipping build."
-            exit 0
+          mkdir -p meshtastic/variants/SquirrelCore
+          cp -r variants/SquirrelCore/* meshtastic/variants/SquirrelCore/
 
-      # 7. Build firmware
       - name: Build SquirrelCore firmware
-        if: ${{ success() }}
-        working-directory: ${{ github.workspace }}/firmware/meshtastic
         run: |
-          echo "Building firmware for SquirrelCore..."
-          platformio run -e SquirrelCore
+          cd meshtastic
+          pio run -e SquirrelCore
 
-      # 8. Check if release already exists
-      - name: Check for existing release
-        id: check_release
-        run: |
-          RELEASE_TAG="SquirrelCore-${{ steps.meshtastic_release.outputs.meshtastic_version }}"
-          if gh release view "$RELEASE_TAG" --repo $GITHUB_REPOSITORY; then
-            echo "Release $RELEASE_TAG already exists, skipping creation."
-            echo "release_exists=true" >> $GITHUB_OUTPUT
-          else
-            echo "release_exists=false" >> $GITHUB_OUTPUT
-
-      # 9. Create GitHub Release
-      - name: Create GitHub Release
-        if: steps.check_release.outputs.release_exists == 'false'
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Release firmware if build succeeds
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: "SquirrelCore-${{ steps.meshtastic_release.outputs.meshtastic_version }}"
-          release_name: "SquirrelCore firmware ${{ steps.meshtastic_release.outputs.meshtastic_version }}"
-          body: "Automated firmware build for SquirrelCore based on Meshtastic ${{ steps.meshtastic_release.outputs.meshtastic_version }}"
-          draft: false
-          prerelease: false
-
-      # 10. Upload firmware binaries
-      - name: Upload firmware assets
-        if: steps.check_release.outputs.release_exists == 'false'
-        uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          files: |
-            ${{ github.workspace }}/firmware/meshtastic/.pio/build/SquirrelCore/firmware.uf2
-            ${{ github.workspace }}/firmware/meshtastic/.pio/build/SquirrelCore/firmware.bin
-            ${{ github.workspace }}/firmware/meshtastic/.pio/build/SquirrelCore/firmware.elf
+          tag: SquirrelCore-${{ steps.meshtastic.outputs.meshtastic_version }}
+          name: SquirrelCore ${{ steps.meshtastic.outputs.meshtastic_version }}
+          files: meshtastic/.pio/build/SquirrelCore/firmware.bin
