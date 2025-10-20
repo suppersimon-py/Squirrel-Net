@@ -94,6 +94,5 @@ Frequency map for LoRa:
 ![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzczOCwicHVyIjoiYmxvYl9pZCJ9fQ==--67fb247f291122792c31ad136f5e619f54231f96/image.png)
 
 My Schematic:
-![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzczNiwicHVyIjoiYmxvYl9pZCJ9fQ==--3af8008c079c7ed920c836316d9bd3c57877a5e0/image.png)
-  
+![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzczOSwicHVyIjoiYmxvYl9pZCJ9fQ==--719c1d9b1189adac5b1e544bd800fccf3930917c/image.png)  
 
