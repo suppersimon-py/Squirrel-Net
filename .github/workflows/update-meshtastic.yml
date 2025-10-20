@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout repository
+      # 1. Checkout this repo
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
@@ -35,16 +35,14 @@ jobs:
           cd firmware
           [ -d meshtastic ] && rm -rf meshtastic
 
-      # 5. Fetch latest stable Meshtastic release
-      - name: Fetch latest stable Meshtastic release
+      # 5. Clone latest stable Meshtastic release
+      - name: Clone latest stable Meshtastic release
         id: meshtastic_release
         run: |
-          set -e
-          
-          # Get latest non-dev release using JSON
+          # Get latest non-dev tag
           LATEST_TAG=$(gh release list --repo meshtastic/firmware --limit 20 --json tagName \
             | jq -r '.[] | select(.tagName | test("dev") | not) | .tagName' | head -n1)
-          
+
           if [ -z "$LATEST_TAG" ]; then
               echo "Error: Could not determine latest Meshtastic release!"
               exit 1
@@ -53,7 +51,7 @@ jobs:
           echo "Latest Meshtastic release: $LATEST_TAG"
           echo "meshtastic_version=$LATEST_TAG" >> $GITHUB_OUTPUT
 
-          # Clone the repo at that tag instead of downloading a source tar
+          # Clone repo at the tag
           git clone --branch "$LATEST_TAG" --depth 1 https://github.com/meshtastic/firmware.git meshtastic
 
       # 6. Sync SquirrelCore variant if present
@@ -74,12 +72,8 @@ jobs:
         if: ${{ success() }}
         working-directory: ${{ github.workspace }}/firmware/meshtastic
         run: |
-          if [ -d "${{ github.workspace }}/firmware/variants/SquirrelCore" ]; then
-            echo "Building firmware for SquirrelCore..."
-            platformio run -e SquirrelCore
-          else
-            echo "SquirrelCore variant folder missing, skipping build."
-            exit 0
+          echo "Building firmware for SquirrelCore..."
+          platformio run -e SquirrelCore
 
       # 8. Check if release already exists
       - name: Check for existing release
