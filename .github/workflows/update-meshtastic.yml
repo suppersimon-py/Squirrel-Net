@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y git python3 python3-pip jq gh
+          sudo apt-get install -y git python3 python3-pip jq gh unzip
           pip install -U platformio
 
       # 3. Authenticate GitHub CLI
@@ -30,7 +30,6 @@ jobs:
 
       # 4. Prepare firmware folder
       - name: Prepare firmware folder
-        working-directory: ${{ github.workspace }}
         run: |
           mkdir -p firmware
           cd firmware
@@ -39,17 +38,13 @@ jobs:
       # 5. Fetch latest stable Meshtastic release
       - name: Fetch latest stable Meshtastic release
         id: meshtastic_release
-        working-directory: ${{ github.workspace }}/firmware
         run: |
           set -e
-
-          # Authenticate if needed
-          gh auth status || gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
-
+          
           # Get latest non-dev release using JSON
           LATEST_TAG=$(gh release list --repo meshtastic/firmware --limit 20 --json tagName \
             | jq -r '.[] | select(.tagName | test("dev") | not) | .tagName' | head -n1)
-
+          
           if [ -z "$LATEST_TAG" ]; then
               echo "Error: Could not determine latest Meshtastic release!"
               exit 1
@@ -58,13 +53,8 @@ jobs:
           echo "Latest Meshtastic release: $LATEST_TAG"
           echo "meshtastic_version=$LATEST_TAG" >> $GITHUB_OUTPUT
 
-          # Download and extract source
-          gh release download "$LATEST_TAG" --repo meshtastic/firmware \
-            --pattern 'source.tar.gz' --output meshtastic.tar.gz
-
-          mkdir -p meshtastic
-          tar -xzf meshtastic.tar.gz -C meshtastic --strip-components=1
-          rm meshtastic.tar.gz
+          # Clone the repo at that tag instead of downloading a source tar
+          git clone --branch "$LATEST_TAG" --depth 1 https://github.com/meshtastic/firmware.git meshtastic
 
       # 6. Sync SquirrelCore variant if present
       - name: Sync SquirrelCore variant
