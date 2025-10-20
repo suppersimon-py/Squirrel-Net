@@ -6,10 +6,6 @@
   ==================================================================
 -->
 
-This is my journal of the design and building process of **Squirrel Net**.  
-You can view this journal in more detail on **Hack Club Blueprint** [here](https://blueprint.hackclub.com/projects/712).
-
-
 ## 10/19/2025 10 AM - Intro and Design Considerations  
 
 ![SupperSimon.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzM4MSwicHVyIjoiYmxvYl9pZCJ9fQ==--35758493b53c23baa459cf0f346f08c3996becdd/SupperSimon.png)
@@ -81,7 +77,7 @@ design notes:
 Full Schematic:
 ![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzYyNywicHVyIjoiYmxvYl9pZCJ9fQ==--c31e2958255602579ca37d0eb3934336d58835bd/image.png)  
 
-## 10/20/2025 - SX1262 Schematic  
+## 10/20/2025 11 AM - SX1262 Schematic  
 
 I followed the reference schematic for the **SX1262** provided in the data sheet. Although I do not need the RF switch, I left it in to make it easier to impedance match later, following more reference models.
 
@@ -95,4 +91,35 @@ Frequency map for LoRa:
 
 My Schematic:
 ![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzczOSwicHVyIjoiYmxvYl9pZCJ9fQ==--719c1d9b1189adac5b1e544bd800fccf3930917c/image.png)  
+
+## 10/20/2025 3 PM - I2C devices added  
+
+#### **GPS**
+I will may replace this with an IC that allows for use of an external antenna.
+**PA1010D Features:**
+- I2C, Uart
+- Embedded antenna
+- Ultra High Sensitivity
+- Positioning Accuracy < 3M
+- Low Power Consumption, Acquisition 36mA, Tracking 28mA, Backup Mode 18uA
+
+#### **OLED**
+I chose something small 0.9" and cheap 2$, but should work just fine for my use.
+**HS91L02W2C01 Features:**
+- I2C
+- 128x32
+- Operating current 16mA
+
+#### **Sensors**
+Kept it simple with the BME280, it has plenty of library support for just about every use.
+
+**BME280 Features:**
+- LOW current draw, 3.6 µA @1Hz
+- Humidity, Pressure, and Temperature 
+
+###### **LED**
+The led is used on start up and as a "heart beat" indicator while turned on.
+
+![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6Mzc2NSwicHVyIjoiYmxvYl9pZCJ9fQ==--8d1f8b1154dcf13e1f10a7401c83e0e5df077cd3/image.png)
+  
 
