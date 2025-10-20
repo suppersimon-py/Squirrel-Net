@@ -92,7 +92,7 @@ Frequency map for LoRa:
 My Schematic:
 ![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzczOSwicHVyIjoiYmxvYl9pZCJ9fQ==--719c1d9b1189adac5b1e544bd800fccf3930917c/image.png)  
 
-## 10/20/2025 3 PM - I2C devices added  
+## 10/20/2025 3:27 PM - I2C devices added  
 
 #### **GPS**
 I will may replace this with an IC that allows for use of an external antenna.
@@ -122,4 +122,22 @@ The led is used on start up and as a "heart beat" indicator while turned on.
 
 ![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6Mzc2NSwicHVyIjoiYmxvYl9pZCJ9fQ==--8d1f8b1154dcf13e1f10a7401c83e0e5df077cd3/image.png)
   
+
+## 10/20/2025 3:45 PM - Full Schematic  
+
+### I've finished the schematic and will be moving on to PCB routing.
+I'd be interested if anyone has any recommendations on making the schematic look better (It's my first) feel free to DM me on
+Slack:
+- Supper Simon
+
+or
+
+Discord:
+- suppersimontwo
+
+
+
+**Schematic:**
+![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6Mzc5OSwicHVyIjoiYmxvYl9pZCJ9fQ==--362f49913b4d52e07af4de63633aa01fa52f3f66/image.png)
+[SquirrrelNet.kicad_sch](/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6Mzc5NiwicHVyIjoiYmxvYl9pZCJ9fQ==--8586e2a65835dfd7affac49baaaac2350a80c83e/SquirrrelNet.kicad_sch)  
 
