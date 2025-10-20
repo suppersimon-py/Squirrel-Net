@@ -1,0 +1,42 @@
+name: Update Meshtastic Firmware
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'  # Check weekly for new releases
+  workflow_dispatch:      # Allow manual runs
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout your repo
+        uses: actions/checkout@v4
+
+      - name: Get latest Meshtastic stable release
+        id: get_release
+        uses: robinraju/release-downloader@v1
+        with:
+          repository: "meshtastic/firmware"
+          latest: true
+          preRelease: false         # This ensures ONLY stable releases
+          fileName: "*.zip"
+          out-file-path: "firmware/meshtastic"
+
+      - name: Unzip firmware
+        run: |
+          cd firmware/meshtastic
+          unzip -o *.zip -d .
+          rm *.zip
+
+      - name: Apply custom variant
+        run: |
+          rsync -av firmware/variants/ firmware/meshtastic/variants/ --ignore-existing
+
+      - name: Commit and push updated firmware
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add firmware/meshtastic
+          git commit -m "Auto-update Meshtastic to latest stable release" || echo "No changes to commit"
+          git push
