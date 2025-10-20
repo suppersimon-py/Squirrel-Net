@@ -7,7 +7,10 @@
   <p>
     This project is for a open source PCB called SquirrelCore using an ESP32-S3 and SX1262, 
     SquirrelCore is designed as a long range mesh client/node/repearter.
-
+  </p>
+</div>
+<div align="left">
+  <p>
     Features:
     - ESP32-S3
     - 8MB Flash
@@ -18,8 +21,8 @@
     - GPS
     
   </p>
-  <h2>Meshtastic powered node using mostly embedded hardware</h2>
-  
+</div>
+<div align="center">
   <p>
     <h3>Meshhtastic Links</h3>
     <a href="https://meshtastic.org" style="text-decoration:none; font-weight:bold;">Get Started</a><br/>
