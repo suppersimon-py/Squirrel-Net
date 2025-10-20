@@ -20,15 +20,16 @@ jobs:
           pip3 install --upgrade platformio
 
       - name: Get latest Meshtastic release
+        id: get_version
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -e
 
-          # Get latest non-dev, non-revoked release
-          RELEASE=$(gh release list --repo meshtastic/firmware --limit 20 --json tagName,name \
-            | jq -r '.[] | select(.tagName | test("dev") | not) | select(.name | test("\\(Revoked\\)") | not) | .tagName' | head -n1)
+          # Get latest non-dev, non-revoked, Beta (stable)
+          RELEASE=$(gh release list --repo meshtastic/firmware --limit 50 --exclude-pre-releases --json tagName,name \
+            | jq -r '.[] | select(.tagName | test("dev") | not) | select(.name | test("\\(Revoked\\)") | not) | select(.name | test("Beta")) | .tagName' | head -n1)
 
           if [ -z "$RELEASE" ]; then
             echo "Error: Could not determine latest Meshtastic release!"
@@ -52,21 +53,36 @@ jobs:
             git clone --branch "$RELEASE" --depth 1 https://github.com/meshtastic/firmware.git meshtastic
           fi
 
-      - name: Check for SquirrelCore variant
+      - name: Add custom SquirrelCore variant
         run: |
-          if [ ! -f meshtastic/boards/SquirrelCore.ini ]; then
+          if [ -d "firmware/variants/SquirrelCore" ]; then
+            cp -r firmware/variants/SquirrelCore meshtastic/variants/
+            if [ -f "firmware/squirrelcore_env.ini" ]; then
+              cat firmware/squirrelcore_env.ini >> meshtastic/platformio.ini
+            fi
+          fi
+
+      - name: Check for SquirrelCore variant
+        id: check_variant
+        run: |
+          if grep -q '^\[env:SquirrelCore\]' meshtastic/platformio.ini; then
+            echo "variant_exists=true" >> $GITHUB_OUTPUT
+          else
             echo "SquirrelCore variant not found. Skipping build."
-            exit 0
+            echo "variant_exists=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Build SquirrelCore firmware
+        if: ${{ steps.check_variant.outputs.variant_exists == 'true' }}
         working-directory: meshtastic
         run: |
           pio run -e SquirrelCore
 
-      - name: Upload firmware artifact
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: SquirrelCore-${{ steps.get_version.outputs.meshtastic_version }}
-          path: meshtastic/.pio/build/SquirrelCore/firmware.bin
+      - name: Release SquirrelCore firmware
+        if: ${{ steps.check_variant.outputs.variant_exists == 'true' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION=${{ steps.get_version.outputs.meshtastic_version }}
+          gh release create "SquirrelCore-$VERSION" --title "SquirrelCore $VERSION" --notes "Built from Meshtastic $VERSION"
+          gh release upload "SquirrelCore-$VERSION" meshtastic/.pio/build/SquirrelCore/firmware.bin --clobber
