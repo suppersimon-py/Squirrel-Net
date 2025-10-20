@@ -63,3 +63,16 @@ Full Schematic:
 ![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzQ4OSwicHVyIjoiYmxvYl9pZCJ9fQ==--57ab9561f80f8a8a6cc9ea3f12c936a3da4ca792/image.png)
   
 
+## 10/19/2025 11 PM - MCU + Wi-Fi Schematic  
+
+### Added MCU + Wi-FI to my Schematic
+I did my own calculations for the Wi-Fi schematic using a handful of datasheets as a reference.
+
+design notes:
+- added I2C bus for planned future additions.
+- Buzzer for notifications.
+- Reset button skipped as my power regulator is switched, so to reset, I can power cycle.
+
+Full Schematic:
+![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzYyNywicHVyIjoiYmxvYl9pZCJ9fQ==--c31e2958255602579ca37d0eb3934336d58835bd/image.png)  
+
