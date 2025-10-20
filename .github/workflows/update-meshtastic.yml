@@ -20,18 +20,20 @@ jobs:
       - name: Create firmware folder
         run: mkdir -p ${{ github.workspace }}/firmware
 
-      # 3. Install dependencies (PlatformIO only)
+      # 3. Install dependencies
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y git python3 python3-pip
+          sudo apt-get install -y git python3 python3-pip gh
           pip install -U platformio
 
-      # 4. Fetch latest stable Meshtastic release
+      # 4. Authenticate GitHub CLI
+      - name: Authenticate GitHub CLI
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+
+      # 5. Fetch latest stable Meshtastic release
       - name: Fetch latest Meshtastic release
         id: meshtastic_release
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         working-directory: ${{ github.workspace }}/firmware
         run: |
           rm -rf meshtastic
@@ -40,14 +42,15 @@ jobs:
             | grep -v "dev" | grep -m1 -oP '^v[0-9]+\.[0-9]+\.[0-9]+')
           echo "Latest Meshtastic release: $LATEST_TAG"
           echo "meshtastic_version=$LATEST_TAG" >> $GITHUB_OUTPUT
-          # Download and extract
+
+          # Download and extract source
           gh release download "$LATEST_TAG" --repo meshtastic/firmware \
             --pattern 'source.tar.gz' --output meshtastic.tar.gz
           mkdir meshtastic
           tar -xzf meshtastic.tar.gz -C meshtastic --strip-components=1
           rm meshtastic.tar.gz
 
-      # 5. Sync SquirrelCore variant if present
+      # 6. Sync SquirrelCore variant if present
       - name: Sync SquirrelCore variant
         run: |
           VARIANT_SRC=${{ github.workspace }}/firmware/variants/SquirrelCore
@@ -60,7 +63,7 @@ jobs:
             echo "SquirrelCore variant folder not found, skipping build."
             exit 0
 
-      # 6. Build firmware
+      # 7. Build firmware
       - name: Build SquirrelCore firmware
         if: ${{ success() }}
         working-directory: ${{ github.workspace }}/firmware/meshtastic
@@ -72,7 +75,7 @@ jobs:
             echo "SquirrelCore variant folder missing, skipping build."
             exit 0
 
-      # 7. Create GitHub Release
+      # 8. Create GitHub Release
       - name: Create GitHub Release
         if: ${{ success() }}
         id: create_release
@@ -86,7 +89,7 @@ jobs:
           draft: false
           prerelease: false
 
-      # 8. Upload firmware binaries to the release
+      # 9. Upload firmware binaries
       - name: Upload firmware assets
         if: ${{ success() }}
         uses: softprops/action-gh-release@v1
