@@ -33,6 +33,17 @@ jobs:
           # Clone the source at that tag
           git clone --branch $LATEST_TAG --depth 1 https://github.com/meshtastic/firmware.git meshtastic
 
+          # Attempt to download source.tar.gz (ignore failure if not present)
+          gh release download "$LATEST_TAG" --repo meshtastic/firmware \
+            --pattern 'source.tar.gz' --output meshtastic.tar.gz || true
+
+          # Extract if downloaded
+          if [ -f meshtastic.tar.gz ]; then
+            mkdir -p meshtastic
+            tar -xzf meshtastic.tar.gz -C meshtastic --strip-components=1
+            rm meshtastic.tar.gz
+          fi
+
       - name: Add SquirrelCore variant
         run: |
           mkdir -p meshtastic/variants/SquirrelCore
