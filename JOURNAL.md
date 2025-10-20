@@ -31,7 +31,12 @@ I started off with a **Heltec V3** and 2 custom **Raspberry Pi Pico** setups as 
 
 ### 3. Power Management
 - **3.3V for MCU and communication** to keep it simple, I chose a linear regulator, the AP2112K-3.3.
-- **Battery Management** I've used the TP4056 in the past with good results, when set up correctly, only requiring a resistor change to change the charging current limit.  
+- **Battery Management** I've used the TP4056 in the past with good results, when set up correctly, only requiring a resistor change to change the charging current limit.
+
+Edit 10/19/25:
+Just realized I didn't really explain the name.
+
+My dad set our first home Wi-Fi SSID as Fat Happy Squirrel for 2.4G way back in 2008. And ever since then, it's always been some variation of Squirrel this Squirrel that.  
 
 ## 10/19/2025 3 PM - Power Management Schematic  
 
