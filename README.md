@@ -14,7 +14,7 @@
   </p>
   
   <p>
-    **Licensing**
+    <h4>Licensing</h4>
     - The core Meshtastic firmware in `/firmware/meshtastic` remains under its original license (as provided by the Meshtastic project).  
     - The SquirrelCore variant files in `/firmware/meshtastic/variants` are MIT-licensed (Copyright 2025 Supper Simon).  
     - When updating the repo, the variant is copied into Meshtastic, but the original Meshtastic license still applies to its code.
