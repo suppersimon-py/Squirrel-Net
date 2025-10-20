@@ -13,11 +13,20 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install dependencies
+      - name: Setup PlatformIO & dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y python3-pip git jq
           pip3 install --upgrade platformio
+
+      # Cache PlatformIO packages for faster builds
+      - name: Cache PlatformIO packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.platformio
+          key: platformio-packages-${{ hashFiles('**/platformio.ini') }}
+          restore-keys: |
+            platformio-packages-
 
       - name: Get latest Meshtastic release
         id: get_version
@@ -27,13 +36,9 @@ jobs:
         run: |
           set -e
 
-          # Get latest non-dev, non-revoked, Beta/stable release
+          # Get latest non-dev, non-revoked, Beta (stable)
           RELEASE=$(gh release list --repo meshtastic/firmware --limit 50 --exclude-pre-releases --json tagName,name \
-            | jq -r '.[] 
-                     | select(.tagName | test("dev") | not) 
-                     | select(.name | test("\\(Revoked\\)") | not) 
-                     | select(.name | test("Beta") | not) 
-                     | .tagName' | head -n1)
+            | jq -r '.[] | select(.tagName | test("dev") | not) | select(.name | test("\\(Revoked\\)") | not) | select(.name | test("Beta")) | .tagName' | head -n1)
 
           if [ -z "$RELEASE" ]; then
             echo "Error: Could not determine latest Meshtastic release!"
@@ -47,13 +52,12 @@ jobs:
           gh release download "$RELEASE" --repo meshtastic/firmware \
             --pattern 'source.tar.gz' --output meshtastic.tar.gz || true
 
-          # Extract if downloaded
+          # Extract if downloaded, otherwise fallback to shallow clone
           if [ -f meshtastic.tar.gz ]; then
             mkdir -p meshtastic
             tar -xzf meshtastic.tar.gz -C meshtastic --strip-components=1
             rm meshtastic.tar.gz
           else
-            # Fallback: clone repo at release tag
             git clone --branch "$RELEASE" --depth 1 https://github.com/meshtastic/firmware.git meshtastic
           fi
 
@@ -72,8 +76,8 @@ jobs:
           if grep -q '^\[env:SquirrelCore\]' meshtastic/platformio.ini; then
             echo "variant_exists=true" >> $GITHUB_OUTPUT
           else
-            echo "SquirrelCore variant not found. Skipping build."
             echo "variant_exists=false" >> $GITHUB_OUTPUT
+            echo "SquirrelCore variant not found. Skipping build."
           fi
 
       - name: Build SquirrelCore firmware
@@ -82,18 +86,20 @@ jobs:
         run: |
           pio run -e SquirrelCore
 
+      - name: Upload firmware as artifact (fallback)
+        if: ${{ steps.check_variant.outputs.variant_exists == 'true' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: SquirrelCore-firmware
+          path: meshtastic/.pio/build/SquirrelCore/firmware.bin
+
       - name: Release SquirrelCore firmware
         if: ${{ steps.check_variant.outputs.variant_exists == 'true' }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           VERSION=${{ steps.get_version.outputs.meshtastic_version }}
+          # Create release if not exists, ignore error if already exists
           gh release create "SquirrelCore-$VERSION" --title "SquirrelCore $VERSION" --notes "Built from Meshtastic $VERSION" || true
+          # Upload firmware asset, overwrite if exists
           gh release upload "SquirrelCore-$VERSION" meshtastic/.pio/build/SquirrelCore/firmware.bin --clobber || true
-
-      - name: Upload firmware artifact
-        if: ${{ steps.check_variant.outputs.variant_exists == 'true' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: SquirrelCore-firmware
-          path: meshtastic/.pio/build/SquirrelCore/firmware.bin
