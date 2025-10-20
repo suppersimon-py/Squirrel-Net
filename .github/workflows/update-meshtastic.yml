@@ -1,3 +1,4 @@
+```yaml
 name: Build SquirrelCore Firmware
 
 on:
@@ -53,36 +54,60 @@ jobs:
             git clone --branch "$RELEASE" --depth 1 https://github.com/meshtastic/firmware.git meshtastic
           fi
 
-      - name: Add custom SquirrelCore variant
+      - name: Check for SquirrelCore variant directory
+        id: check_variant_dir
         run: |
+          set -e
+          echo "Checking for SquirrelCore variant files..."
           if [ -d "firmware/variants/SquirrelCore" ]; then
-            cp -r firmware/variants/SquirrelCore meshtastic/variants/
-            if [ -f "firmware/squirrelcore_env.ini" ]; then
-              cat firmware/squirrelcore_env.ini >> meshtastic/platformio.ini
-            fi
+            echo "SquirrelCore variant directory found at firmware/variants/SquirrelCore"
+            echo "variant_dir_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "SquirrelCore variant directory not found at firmware/variants/SquirrelCore. Skipping build."
+            echo "variant_dir_exists=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Check for SquirrelCore variant
-        id: check_variant
+      - name: Add custom SquirrelCore variant
+        id: add_variant
+        if: ${{ steps.check_variant_dir.outputs.variant_dir_exists == 'true' }}
         run: |
+          set -e
+          echo "Copying SquirrelCore variant to meshtastic/variants/"
+          cp -r firmware/variants/SquirrelCore meshtastic/variants/
+          if [ -f "firmware/squirrelcore_env.ini" ]; then
+            echo "Appending SquirrelCore environment to platformio.ini"
+            cat firmware/squirrelcore_env.ini >> meshtastic/platformio.ini
+            echo "env_added=true" >> $GITHUB_OUTPUT
+          else
+            echo "firmware/squirrelcore_env.ini not found. Skipping environment append."
+            echo "env_added=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Check for SquirrelCore environment
+        id: check_variant
+        if: ${{ steps.check_variant_dir.outputs.variant_dir_exists == 'true' }}
+        run: |
+          set -e
           if grep -q '^\[env:SquirrelCore\]' meshtastic/platformio.ini; then
+            echo "SquirrelCore environment found in platformio.ini"
             echo "variant_exists=true" >> $GITHUB_OUTPUT
           else
-            echo "SquirrelCore variant not found. Skipping build."
+            echo "SquirrelCore environment not found in platformio.ini. Skipping build."
             echo "variant_exists=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Build SquirrelCore firmware
-        if: ${{ steps.check_variant.outputs.variant_exists == 'true' }}
+        if: ${{ steps.check_variant_dir.outputs.variant_dir_exists == 'true' && steps.check_variant.outputs.variant_exists == 'true' }}
         working-directory: meshtastic
         run: |
           pio run -e SquirrelCore
 
       - name: Release SquirrelCore firmware
-        if: ${{ steps.check_variant.outputs.variant_exists == 'true' }}
+        if: ${{ steps.check_variant_dir.outputs.variant_dir_exists == 'true' && steps.check_variant.outputs.variant_exists == 'true' }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           VERSION=${{ steps.get_version.outputs.meshtastic_version }}
-          gh release create "SquirrelCore-$VERSION" --title "SquirrelCore $VERSION" --notes "Built from Meshtastic $VERSION"
-          gh release upload "SquirrelCore-$VERSION" meshtastic/.pio/build/SquirrelCore/firmware.bin --clobber
+          gh release create "SquirrelCore-$VERSION" --title "SquirrelCore $VERSION" --notes "Built from Meshtastic $VERSION" --repo ${{ github.repository }}
+          gh release upload "SquirrelCore-$VERSION" meshtastic/.pio/build/SquirrelCore/firmware.bin --clobber --repo ${{ github.repository }}
+```
