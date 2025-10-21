@@ -149,9 +149,11 @@ I wrote an automation to update the meshtastic firmware in my repo, build update
 
 Updated **Licensing** to separate my work from **Meshtastics**
 
-Improved **README**, still needs work
+I improved **README**, still needs work
 ![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6Mzg5OSwicHVyIjoiYmxvYl9pZCJ9fQ==--0c5f14d09396e72a2e25a20f11c423b387375e01/image.png)
 
 
-Started writing the **Variant File** for SquirrelCore  
+Started writing the **Variant File** for SquirrelCore
+
+Renamed the project to "SquirrelCore" to better reflect my development process, like a squirrel I just jump without thinking of the consequences or skills required, but someone comes out unscathed, usually with another skill in my toolbelt.  
 
