@@ -145,7 +145,7 @@ Discord:
 
 I wrote an automation to update the meshtastic firmware in my repo, build updated firmware, and release the .bin and the source in a .zip, so when finished, my repo will always have updated builds/source for people to recreate my project.
 
-**Learned** basic automation for GitHub Repos.
+**Learned** basic automation for GitHub Repos, I have ideas for future projects that will really help on.
 
 Updated **Licensing** to separate my work from **Meshtastics**
 
