@@ -141,3 +141,17 @@ Discord:
 ![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6Mzc5OSwicHVyIjoiYmxvYl9pZCJ9fQ==--362f49913b4d52e07af4de63633aa01fa52f3f66/image.png)
 [SquirrrelNet.kicad_sch](/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6Mzc5NiwicHVyIjoiYmxvYl9pZCJ9fQ==--8586e2a65835dfd7affac49baaaac2350a80c83e/SquirrrelNet.kicad_sch)  
 
+## 10/20/2025 8 PM - Updated Projects GitHub  
+
+I wrote an automation to update the meshtastic firmware in my repo, build updated firmware, and release the .bin and the source in a .zip, so when finished, my repo will always have updated builds/source for people to recreate my project.
+
+**Learned** basic automation for GitHub Repos.
+
+Updated **Licensing** to separate my work from **Meshtastics**
+
+Improved **README**, still needs work
+![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6Mzg5OSwicHVyIjoiYmxvYl9pZCJ9fQ==--0c5f14d09396e72a2e25a20f11c423b387375e01/image.png)
+
+
+Started writing the **Variant File** for SquirrelCore  
+
