@@ -3,7 +3,7 @@
     <img src=".github/SupperSimon.png" alt="SupperSimon" width="800"/>
   </a>
 
-  <h2>Squirrel-Net</h2>
+  <h2>Squirrel-Core</h2>
   <p>
     <strong>SquirrelCore</strong> is an open-source PCB built around the <strong>ESP32-S3</strong> and <strong>SX1262</strong>. 
     It is designed for long-range mesh networking and can function as a client, node, or repeater in a distributed network.
