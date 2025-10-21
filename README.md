@@ -5,37 +5,41 @@
 
   <h2>Squirrel-Net</h2>
   <p>
-    This project is for a open source PCB called SquirrelCore using an ESP32-S3 and SX1262, 
-    SquirrelCore is designed as a long range mesh client/node/repearter.
+    <strong>SquirrelCore</strong> is an open-source PCB built around the <strong>ESP32-S3</strong> and <strong>SX1262</strong>. 
+    It is designed for long-range mesh networking and can function as a client, node, or repeater in a distributed network.
   </p>
 </div>
+
 <div align="left">
+  <h3>Features</h3>
+  <ul>
+    <li>ESP32-S3 microcontroller</li>
+    <li>8MB Flash memory</li>
+    <li>LoRaWAN, Wi-Fi, Bluetooth, and USB-C serial connectivity</li>
+    <li>Adjustable battery charging: 400 mA or 1 A</li>
+    <li>OLED display</li>
+    <li>BME280 sensor (temperature, humidity, pressure)</li>
+    <li>GPS module</li>
+  </ul>
+</div>
+
+<div align="center">
+  <h3>Meshtastic Links</h3>
   <p>
-    Features:
-    <ul>
-      <li>ESP32-S3</li>
-      <li>8MB Flash</li>
-      <li>LoRaWAN, Wi-Fi, Bluetooth, and USB-C serial</li>
-      <li>Adjustable 400mA and 1A battery charging</li>
-      <li>OLED display</li>
-      <li>BME280 sensor</li>
-      <li>GPS module</li>
-    </ul>
+    <a href="https://meshtastic.org" style="text-decoration:none; font-weight:bold;">Get Started</a><br/>
+    - <a href="https://meshtastic.org/docs/development/firmware/build">Building Instructions</a> – Learn how to compile the firmware from source.<br/>
+    - <a href="https://meshtastic.org/docs/getting-started/flashing-firmware/">Flashing Instructions</a> – Install or update the firmware on your device.
   </p>
 </div>
+
 <div align="center">
-  <p>
-    <h3>Meshhtastic Links</h3>
-    <a href="https://meshtastic.org" style="text-decoration:none; font-weight:bold;">Get Started</a><br/>
-    - 🔧 <a href="https://meshtastic.org/docs/development/firmware/build">Building Instructions</a> – Learn how to compile the firmware from source.<br/>
-    - ⚡ <a href="https://meshtastic.org/docs/getting-started/flashing-firmware/">Flashing Instructions</a> – Install or update the firmware on your device.
-  </p>
   <h3>Licensing</h3>
 </div>
+
 <div align="left">
-<ul>
-  <li>The core Meshtastic firmware in <code>/firmware/meshtastic</code> remains under its original license (as provided by the Meshtastic project).</li>
-  <li>The SquirrelCore variant files in <code>/firmware/meshtastic/variants</code> are MIT-licensed (Copyright 2025 Supper Simon).</li>
-  <li>When updating the repo, the variant is copied into Meshtastic, but the original Meshtastic license still applies to its code.</li>
-</ul>
+  <ul>
+    <li>The core Meshtastic firmware in <code>/firmware/meshtastic</code> remains under its original license (as provided by the Meshtastic project).</li>
+    <li>The SquirrelCore variant files in <code>/firmware/meshtastic/variants</code> are MIT-licensed (Copyright 2025 Supper Simon).</li>
+    <li>When updating the repository, the variant is copied into Meshtastic, but the original Meshtastic license still applies to its code.</li>
+  </ul>
 </div>
