@@ -126,14 +126,7 @@ The led is used on start up and as a "heart beat" indicator while turned on.
 ## 10/20/2025 3:45 PM - Full Schematic  
 
 ### I've finished the schematic and will be moving on to PCB routing.
-I'd be interested if anyone has any recommendations on making the schematic look better (It's my first) feel free to DM me on
-Slack:
-- Supper Simon
-
-or
-
-Discord:
-- suppersimontwo
+I'd be interested if anyone has any recommendations on making the schematic look better (It's my first). Feel free to start commenting on the Repo
 
 
 
