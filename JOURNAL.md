@@ -126,14 +126,7 @@ The led is used on start up and as a "heart beat" indicator while turned on.
 ## 10/20/2025 3:45 PM - Full Schematic  
 
 ### I've finished the schematic and will be moving on to PCB routing.
-I'd be interested if anyone has any recommendations on making the schematic look better (It's my first) feel free to DM me on
-Slack:
-- Supper Simon
-
-or
-
-Discord:
-- suppersimontwo
+I'd be interested if anyone has any recommendations on making the schematic look better (It's my first). Feel free to start commenting on the Repo
 
 
 
@@ -145,13 +138,33 @@ Discord:
 
 I wrote an automation to update the meshtastic firmware in my repo, build updated firmware, and release the .bin and the source in a .zip, so when finished, my repo will always have updated builds/source for people to recreate my project.
 
-**Learned** basic automation for GitHub Repos.
+**Learned** basic automation for GitHub Repos, I have ideas for future projects that will really help on.
 
 Updated **Licensing** to separate my work from **Meshtastics**
 
-Improved **README**, still needs work
-![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6Mzg5OSwicHVyIjoiYmxvYl9pZCJ9fQ==--0c5f14d09396e72a2e25a20f11c423b387375e01/image.png)
+I improved **README**, still needs work
+![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzkxNywicHVyIjoiYmxvYl9pZCJ9fQ==--81a61f7880b5c628ca5da345e152725f76dae314/image.png)
 
 
-Started writing the **Variant File** for SquirrelCore  
+
+Started writing the **Variant File** for SquirrelCore
+
+Renamed the project to "SquirrelCore" to better reflect my development process, like a squirrel I just jump without thinking of the consequences or skills required, but someone comes out unscathed, usually with another skill in my toolbelt.  
+
+## 10/21/2025 - Planing + Routed Power Management  
+
+First, may I ask how y'all feel about rounded traces? I both love and hate them so much.
+
+All my components were selected since they can be provided by JLCPCB. Unfortunately, I don't have the tools required for at-home assembly, so the majority of my parts are getting the old pick and place treatment, but I'm saving the larger ones for by hand.
+
+I'm still finalizing the bill of materials. For the power switch, I'm reusing 100pc faceplate mount switches I got some time ago for really cheap. 
+
+I plan on mounting the switch in a depression on the outside, allowing the legs to pass into the case onto the switch pads for soldering, then have a almost cover slide over the switch into rails on the case, locking the switch into place and preventing accidental use of the switch
+
+I don't really have any size requirements for my PCB, so I picked a decent 60x35 mm 4-layer PCB
+for now, it's tame, but I'm sure as soon as I start work on data lines, it's going to get interesting
+
+![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzkzMSwicHVyIjoiYmxvYl9pZCJ9fQ==--e319b4ee3d987ce1a50824d34a73612ef09b3752/image.png)
+
+![SquirrrelCore.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzkzMiwicHVyIjoiYmxvYl9pZCJ9fQ==--ecf139cd72c6dec6ea9b67b76ce726569f057499/SquirrrelCore.png)  
 
