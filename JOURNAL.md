@@ -151,3 +151,20 @@ Started writing the **Variant File** for SquirrelCore
 
 Renamed the project to "SquirrelCore" to better reflect my development process, like a squirrel I just jump without thinking of the consequences or skills required, but someone comes out unscathed, usually with another skill in my toolbelt.  
 
+## 10/21/2025 - Planing + Routed Power Management  
+
+First, may I ask how y'all feel about rounded traces? I both love and hate them so much.
+
+All my components were selected since they can be provided by JLCPCB. Unfortunately, I don't have the tools required for at-home assembly, so the majority of my parts are getting the old pick and place treatment, but I'm saving the larger ones for by hand.
+
+I'm still finalizing the bill of materials. For the power switch, I'm reusing 100pc faceplate mount switches I got some time ago for really cheap. 
+
+I plan on mounting the switch in a depression on the outside, allowing the legs to pass into the case onto the switch pads for soldering, then have a almost cover slide over the switch into rails on the case, locking the switch into place and preventing accidental use of the switch
+
+I don't really have any size requirements for my PCB, so I picked a decent 60x35 mm 4-layer PCB
+for now, it's tame, but I'm sure as soon as I start work on data lines, it's going to get interesting
+
+![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzkzMSwicHVyIjoiYmxvYl9pZCJ9fQ==--e319b4ee3d987ce1a50824d34a73612ef09b3752/image.png)
+
+![SquirrrelCore.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzkzMiwicHVyIjoiYmxvYl9pZCJ9fQ==--ecf139cd72c6dec6ea9b67b76ce726569f057499/SquirrrelCore.png)  
+
