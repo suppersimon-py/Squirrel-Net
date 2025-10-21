@@ -150,7 +150,8 @@ I wrote an automation to update the meshtastic firmware in my repo, build update
 Updated **Licensing** to separate my work from **Meshtastics**
 
 I improved **README**, still needs work
-![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6Mzg5OSwicHVyIjoiYmxvYl9pZCJ9fQ==--0c5f14d09396e72a2e25a20f11c423b387375e01/image.png)
+![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzkxNywicHVyIjoiYmxvYl9pZCJ9fQ==--81a61f7880b5c628ca5da345e152725f76dae314/image.png)
+
 
 
 Started writing the **Variant File** for SquirrelCore
