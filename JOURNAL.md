@@ -181,7 +181,7 @@ The board is already starting to feel small. The remaining components will surel
 I've been doing my routing without the Fab layer on..... Looks great, but I'll fix that next.
 ![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NDQ2MCwicHVyIjoiYmxvYl9pZCJ9fQ==--3699564e0bf8aa0bac63eb80f9728c7a5dad6b2c/image.png)
 
-I exported my board as a .GLB and imported it into **Blender** for rendering. I'm also trying to relearn it since it's been a hot minute since I've used it for modeling, and I want to try and use it to build the case. I'm not really sure why, but Blender really liked to crash on me, so this is the best render for now.
+I exported my board as a .GLB and imported it into **Blender** for rendering. I'm also trying to relearn it since it's been a hot minute since I've used it for modeling, and I want to try and use it to build the case. I'm not really sure why, but Blender really liked to crash on me, so this is the best render for now. I will not include the time spent working in Blender for renders of my board in the build time.
 ![Untitled.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NDQ4NSwicHVyIjoiYmxvYl9pZCJ9fQ==--d3e60d2c7c1cdae65fa6fd20b31b4dde081806e0/Untitled.png)
 
 
