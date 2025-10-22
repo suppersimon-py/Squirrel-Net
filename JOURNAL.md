@@ -168,3 +168,29 @@ for now, it's tame, but I'm sure as soon as I start work on data lines, it's goi
 
 ![SquirrrelCore.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzkzMiwicHVyIjoiYmxvYl9pZCJ9fQ==--ecf139cd72c6dec6ea9b67b76ce726569f057499/SquirrrelCore.png)  
 
+## 10/22/2025 - Routed SX1262 + MCUs Wi-Fi antenna  
+
+My placement for the **SX1262** is a bit close to the Wi-Fi antenna, but it's a small board, and I'm already a bit lacking in room; therefore, I'm not expecting great results for Wi-Fi. All I plan on using the antenna for is the on-board Bluetooth, so high bandwidth is not really a requirement for my design.
+
+I am keeping most of my data traces at 0.3mm. My power max consumption should only ever peak around 300mA, so my choice of 1mm (external layers only) power traces should be more than sufficient.
+
+![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NDUwMywicHVyIjoiYmxvYl9pZCJ9fQ==--0a1ad50cbf8f7da83485fea62fd2711603c45622/image.png)
+
+The board is already starting to feel small. The remaining components will surely be fun to add and route.
+
+I've been doing my routing without the Fab layer on..... Looks great, but I'll fix that next.
+![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NDQ2MCwicHVyIjoiYmxvYl9pZCJ9fQ==--3699564e0bf8aa0bac63eb80f9728c7a5dad6b2c/image.png)
+
+I exported my board as a .GLB and imported it into **Blender** for rendering. I'm also trying to relearn it since it's been a hot minute since I've used it for modeling, and I want to try and use it to build the case. I'm not really sure why, but Blender really liked to crash on me, so this is the best render for now.
+![Untitled.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NDQ4NSwicHVyIjoiYmxvYl9pZCJ9fQ==--d3e60d2c7c1cdae65fa6fd20b31b4dde081806e0/Untitled.png)
+
+
+For my layout of the **SX1262**, I used a reference (provided below) as just a starting place for my design; it really didn't help that much.
+Mine:
+![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NDUwMCwicHVyIjoiYmxvYl9pZCJ9fQ==--892963e44f6069551103edbad72f7aee32dc48eb/image.png)
+
+Sentech SX1276 **reference**:
+![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NDUwMiwicHVyIjoiYmxvYl9pZCJ9fQ==--67ae0c1b86a2af0f2f8da6a44d91b61c9cbfa47e/image.png)
+[SX1272MB2DAS_e364v02a_layout_top.pdf](/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NDQ5NywicHVyIjoiYmxvYl9pZCJ9fQ==--8db85e5b66c8c142cd38290b68022213d6478b6f/SX1272MB2DAS_e364v02a_layout_top.pdf)
+[SX1272MB2DAS_e364v02a_layout_bottom.pdf](/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NDQ5NiwicHVyIjoiYmxvYl9pZCJ9fQ==--df67da55dbdda5cc3dd9542fa1cc213ba58f0f72/SX1272MB2DAS_e364v02a_layout_bottom.pdf)  
+
