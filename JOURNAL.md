@@ -191,7 +191,7 @@ For my layout of the **SX1262**, I used a reference (provided below) as just a s
 Mine:
 ![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NDUwMCwicHVyIjoiYmxvYl9pZCJ9fQ==--892963e44f6069551103edbad72f7aee32dc48eb/image.png)
 
-Sentech SX1276 **reference**:
+Semtech SX1276 **reference**:
 ![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NDUwMiwicHVyIjoiYmxvYl9pZCJ9fQ==--67ae0c1b86a2af0f2f8da6a44d91b61c9cbfa47e/image.png)
 [SX1272MB2DAS_e364v02a_layout_top.pdf](/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NDQ5NywicHVyIjoiYmxvYl9pZCJ9fQ==--8db85e5b66c8c142cd38290b68022213d6478b6f/SX1272MB2DAS_e364v02a_layout_top.pdf)
 [SX1272MB2DAS_e364v02a_layout_bottom.pdf](/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NDQ5NiwicHVyIjoiYmxvYl9pZCJ9fQ==--df67da55dbdda5cc3dd9542fa1cc213ba58f0f72/SX1272MB2DAS_e364v02a_layout_bottom.pdf)  
