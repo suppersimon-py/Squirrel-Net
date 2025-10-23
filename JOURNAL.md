@@ -168,7 +168,7 @@ for now, it's tame, but I'm sure as soon as I start work on data lines, it's goi
 
 ![SquirrrelCore.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzkzMiwicHVyIjoiYmxvYl9pZCJ9fQ==--ecf139cd72c6dec6ea9b67b76ce726569f057499/SquirrrelCore.png)  
 
-## 10/22/2025 - Routed SX1262 + MCUs Wi-Fi antenna  
+## 10/22/2025 2 PM - Routed SX1262 + MCUs Wi-Fi antenna  
 
 My placement for the **SX1262** is a bit close to the Wi-Fi antenna, but it's a small board, and I'm already a bit lacking in room; therefore, I'm not expecting great results for Wi-Fi. All I plan on using the antenna for is the on-board Bluetooth, so high bandwidth is not really a requirement for my design.
 
@@ -195,4 +195,18 @@ Semtech SX1276 **reference**:
 ![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NDUwMiwicHVyIjoiYmxvYl9pZCJ9fQ==--67ae0c1b86a2af0f2f8da6a44d91b61c9cbfa47e/image.png)
 [SX1272MB2DAS_e364v02a_layout_top.pdf](/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NDQ5NywicHVyIjoiYmxvYl9pZCJ9fQ==--8db85e5b66c8c142cd38290b68022213d6478b6f/SX1272MB2DAS_e364v02a_layout_top.pdf)
 [SX1272MB2DAS_e364v02a_layout_bottom.pdf](/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NDQ5NiwicHVyIjoiYmxvYl9pZCJ9fQ==--df67da55dbdda5cc3dd9542fa1cc213ba58f0f72/SX1272MB2DAS_e364v02a_layout_bottom.pdf)  
+
+## 10/22/2025 9 PM - Built a small scene for project renders  
+
+A simple box to make images and animations in
+![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NDU5NywicHVyIjoiYmxvYl9pZCJ9fQ==--0f6669a99d85ac9362d13d42946d041481db87b2/image.png)
+
+
+I just made textured planes for the walls, a simple wooden plane as a floor, and a glass display base. I have a good GPU, so all my renders will be using Cycles rendering in 4K with 8000 samples, which looks great for all except the board. In my final iteration, I'll change the material properties for the board even further, hopefully getting a good result.
+
+It renders decent images, but I believe it will look much better rendering videos of it rotating
+ 
+Result:
+![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NDU5MywicHVyIjoiYmxvYl9pZCJ9fQ==--a2f91a810296f36ad36455f0e6e77c8f86d68db4/image.png)
+  
 
