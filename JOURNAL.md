@@ -208,5 +208,9 @@ It renders decent images, but I believe it will look much better rendering video
  
 Result:
 ![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NDU5MywicHVyIjoiYmxvYl9pZCJ9fQ==--a2f91a810296f36ad36455f0e6e77c8f86d68db4/image.png)
+
+I figured out why Blender was crashing so much:
+![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NDc5OCwicHVyIjoiYmxvYl9pZCJ9fQ==--d74f845494ebcdd5b17a31ef2ab7549ad40654a3/image.png)
+
   
 
