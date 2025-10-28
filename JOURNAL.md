@@ -214,7 +214,7 @@ I figured out why Blender was crashing so much:
 
   
 
-## 10/28/2025 - Almost finished the board design  
+## 10/28/2025 1 PM - Almost finished the board design  
 
 I've connected all components and am now just going through everything again to clean things up and check connections.
 
@@ -232,4 +232,17 @@ BOM
 ![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjI0NSwicHVyIjoiYmxvYl9pZCJ9fQ==--eccdcf999269e06945cd171941a7e7c276198ba0/image.png)
 
 [bom](/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjI0MywicHVyIjoiYmxvYl9pZCJ9fQ==--0b7bab9bc02c4dda49767a8385d1ab951437e62e/bom.csv)  
+
+## 10/28/2025 7 PM - Finding replacements for Out of stock components  
+
+I'm my design, I used the Johanson-0900FM15D0039E in my SX1262 RF track, however, it's out of stock so I need to find a replacement
+![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjM4OSwicHVyIjoiYmxvYl9pZCJ9fQ==--1a67899c013bc1cd55f6b31717fe6fa43d6f32b1/image.png)
+
+Same with the pa1010d (GPS) being unavailable.
+
+My current plan is to pass on the GPS (For Now) and just focus on my RF path.
+
+I've also finished all my PCB routing and fixed all the connection errors. There were many.
+![SquirrrelNet](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjM5MCwicHVyIjoiYmxvYl9pZCJ9fQ==--035bd683ce0d2e1b3a66aa1b20e7f7608d4c8eb0/SquirrrelNet.png)
+  
 
