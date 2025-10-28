@@ -214,3 +214,22 @@ I figured out why Blender was crashing so much:
 
   
 
+## 10/28/2025 - Almost finished the board design  
+
+I've connected all components and am now just going through everything again to clean things up and check connections.
+
+I've also decided to skip some components from the schematic since some power pins are so close to each other.
+
+![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjIzOSwicHVyIjoiYmxvYl9pZCJ9fQ==--815d79984f391e871f85f2e80a3a6ec097a10684/image.png)
+
+
+I've made my BOM; however, I'm still trying to optimize it. The lowest amount of PCBs I can manufacture is 5, and I don't have the at-home capacity to assemble them, so it's gonna be more than anticipated for components and assembly.
+
+I find it crazy that the PCB itself is so cheap compared to buying all the components:
+![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjI0MSwicHVyIjoiYmxvYl9pZCJ9fQ==--c054bd5c70f8c4f6118e1fa966c5bc1598edea50/image.png)
+
+BOM
+![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjI0NSwicHVyIjoiYmxvYl9pZCJ9fQ==--eccdcf999269e06945cd171941a7e7c276198ba0/image.png)
+
+[bom](/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjI0MywicHVyIjoiYmxvYl9pZCJ9fQ==--0b7bab9bc02c4dda49767a8385d1ab951437e62e/bom.csv)  
+
