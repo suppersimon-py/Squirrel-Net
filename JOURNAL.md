@@ -246,3 +246,16 @@ I've also finished all my PCB routing and fixed all the connection errors. There
 ![SquirrrelNet](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjM5MCwicHVyIjoiYmxvYl9pZCJ9fQ==--035bd683ce0d2e1b3a66aa1b20e7f7608d4c8eb0/SquirrrelNet.png)
   
 
+## 10/29/2025 - redesigning the SX1262 Transceiver  
+
+The saw filter (0900FM15D0039E) I was using in my schematic is out of stock, so I'm skipping it.
+
+I'm currently working on using the SX1262 evaluation board as a reference; however, I will still need to come up with the component values.
+
+And to top that all off, I'm sick while doing this :(
+
+![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjQ5NywicHVyIjoiYmxvYl9pZCJ9fQ==--073757e0e08d7974d86143918e91b87368cc7a63/image.png)
+![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjQ5OCwicHVyIjoiYmxvYl9pZCJ9fQ==--54559ad1107f6c9dbcf46ac297d9cb03d41d285b/image.png)
+
+  
+
