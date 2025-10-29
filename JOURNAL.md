@@ -246,7 +246,7 @@ I've also finished all my PCB routing and fixed all the connection errors. There
 ![SquirrrelNet](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjM5MCwicHVyIjoiYmxvYl9pZCJ9fQ==--035bd683ce0d2e1b3a66aa1b20e7f7608d4c8eb0/SquirrrelNet.png)
   
 
-## 10/29/2025 - redesigning the SX1262 Transceiver  
+## 10/29/2025 11 AM - redesigning the SX1262 Transceiver  
 
 The saw filter (0900FM15D0039E) I was using in my schematic is out of stock, so I'm skipping it.
 
@@ -257,5 +257,16 @@ And to top that all off, I'm sick while doing this :(
 ![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjQ5NywicHVyIjoiYmxvYl9pZCJ9fQ==--073757e0e08d7974d86143918e91b87368cc7a63/image.png)
 ![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjQ5OCwicHVyIjoiYmxvYl9pZCJ9fQ==--54559ad1107f6c9dbcf46ac297d9cb03d41d285b/image.png)
 
+  
+
+## 10/29/2025 2 PM - Updated SX1262  
+
+This doesn't look nearly as clean, and I think I messed up the impedance matching, but I built a basic filter following the reference schematic and some values from other boards
+
+![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjUxNCwicHVyIjoiYmxvYl9pZCJ9fQ==--282039efdd3e163e7cf1c2b796498ddc32a95183/image.png)
+
+![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjUxNSwicHVyIjoiYmxvYl9pZCJ9fQ==--f7ea9f23ff7628966c0f95e770a99f52ea521430/image.png)
+
+![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjUxNiwicHVyIjoiYmxvYl9pZCJ9fQ==--e131ac19459b47caec91c23cf8e8854f8483159f/image.png)
   
 
