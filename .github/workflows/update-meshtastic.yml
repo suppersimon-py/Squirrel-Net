@@ -57,12 +57,25 @@ jobs:
 
       - name: Add custom SquirrelCore variant
         run: |
+          # Copy variant folder if it exists
           if [ -d "firmware/variants/SquirrelCore" ]; then
-            cp -r firmware/variants/SquirrelCore meshtastic/variants
+            mkdir -p meshtastic/variants/esp32s3/
+            cp -r firmware/variants/SquirrelCore meshtastic/variants/esp32s3/
+            echo "Copied SquirrelCore variant."
+      
+            # Append environment config
             if [ -f "firmware/squirrelcore_env.ini" ]; then
+              echo "" >> meshtastic/platformio.ini
+              echo "# Added by workflow for SquirrelCore" >> meshtastic/platformio.ini
               cat firmware/squirrelcore_env.ini >> meshtastic/platformio.ini
+              echo "Appended SquirrelCore environment config."
+            else
+              echo "Warning: firmware/squirrelcore_env.ini not found!"
             fi
+          else
+            echo "No local SquirrelCore variant found."
           fi
+
 
       - name: Check for SquirrelCore variant
         id: check_variant
