@@ -58,7 +58,7 @@ jobs:
       - name: Add custom SquirrelCore variant
         run: |
           VARIANT_SRC="firmware/variants/SquirrelCore"
-          VARIANT_DST="meshtastic/variants/esp32s3/SquirrelCore"
+          VARIANT_DST="meshtastic/variants/SquirrelCore"
       
           if [ -d "$VARIANT_SRC" ]; then
             echo "Found SquirrelCore variant source directory."
