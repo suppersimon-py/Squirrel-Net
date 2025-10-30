@@ -7,10 +7,11 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '0 6 * * 1'  # Every Monday at 06:00 UTC
-    
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -41,17 +42,16 @@ jobs:
           echo "Latest Meshtastic release: $RELEASE"
           echo "meshtastic_version=$RELEASE" >> $GITHUB_OUTPUT
 
-          # Download source if available, ignore failure
+          # Try downloading source archive first
           gh release download "$RELEASE" --repo meshtastic/firmware \
             --pattern 'source.tar.gz' --output meshtastic.tar.gz || true
 
-          # Extract if downloaded
+          # Extract or fallback to git clone
           if [ -f meshtastic.tar.gz ]; then
             mkdir -p meshtastic
             tar -xzf meshtastic.tar.gz -C meshtastic --strip-components=1
             rm meshtastic.tar.gz
           else
-            # Fallback: clone repo at release tag
             git clone --branch "$RELEASE" --depth 1 https://github.com/meshtastic/firmware.git meshtastic
           fi
 
@@ -59,21 +59,21 @@ jobs:
         run: |
           VARIANT_SRC="firmware/variants/SquirrelCore"
           VARIANT_DST="meshtastic/variants/SquirrelCore"
-      
+
           if [ -d "$VARIANT_SRC" ]; then
             echo "Found SquirrelCore variant source directory."
             mkdir -p "$(dirname "$VARIANT_DST")"
             cp -r "$VARIANT_SRC" "$VARIANT_DST"
             echo "Copied SquirrelCore variant to Meshtastic tree."
-      
-            # Print variant's platformio.ini for debugging
+
             if [ -f "$VARIANT_SRC/platformio.ini" ]; then
               echo "---- Contents of SquirrelCore/platformio.ini ----"
               cat "$VARIANT_SRC/platformio.ini"
               echo "------------------------------------------------"
-      
+
               echo "" >> meshtastic/platformio.ini
               echo "# Added by workflow for SquirrelCore" >> meshtastic/platformio.ini
+              # Append everything except the [platformio] section
               awk '!/^\[platformio\]/' "$VARIANT_SRC/platformio.ini" >> meshtastic/platformio.ini
               echo "Appended SquirrelCore environment config without duplicate [platformio] section."
             else
@@ -87,10 +87,14 @@ jobs:
         working-directory: meshtastic
         run: |
           echo "Searching for [env:*SquirrelCore*] in platformio.ini"
-          grep -E '^\[env:.*SquirrelCore.*\]' platformio.ini || (echo "Error: Missing SquirrelCore environment in platformio.ini" && exit 1)
+          grep -iE '^\[env:.*squirrelcore.*\]' platformio.ini || (
+            echo "Error: Missing SquirrelCore environment in platformio.ini"
+            echo "---- Environments found ----"
+            grep -iE '^\[env:.*\]' platformio.ini || echo "None found"
+            exit 1
+          )
 
-
-      - name: Check for SquirrelCore variant
+      - name: Check for SquirrelCore variant directory
         id: check_variant
         run: |
           if [ -d "meshtastic/variants/SquirrelCore" ]; then
@@ -105,7 +109,8 @@ jobs:
         if: ${{ steps.check_variant.outputs.variant_exists == 'true' }}
         working-directory: meshtastic
         run: |
-          pio run -e SquirrelCore
+          echo "Building SquirrelCore firmware..."
+          pio run -e SquirrelCore || pio run -e squirrelcore
 
       - name: Release SquirrelCore firmware
         if: ${{ steps.check_variant.outputs.variant_exists == 'true' }}
@@ -113,5 +118,17 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           VERSION=${{ steps.get_version.outputs.meshtastic_version }}
-          gh release create "SquirrelCore-$VERSION" --title "SquirrelCore $VERSION" --notes "Built from Meshtastic $VERSION"
-          gh release upload "SquirrelCore-$VERSION" meshtastic/.pio/build/SquirrelCore/firmware.bin --clobber
+          echo "Creating GitHub release for SquirrelCore-$VERSION"
+          gh release create "SquirrelCore-$VERSION" \
+            --title "SquirrelCore $VERSION" \
+            --notes "Built automatically from Meshtastic $VERSION"
+          
+          echo "Uploading built firmware..."
+          if [ -f meshtastic/.pio/build/SquirrelCore/firmware.bin ]; then
+            gh release upload "SquirrelCore-$VERSION" meshtastic/.pio/build/SquirrelCore/firmware.bin --clobber
+          elif [ -f meshtastic/.pio/build/squirrelcore/firmware.bin ]; then
+            gh release upload "SquirrelCore-$VERSION" meshtastic/.pio/build/squirrelcore/firmware.bin --clobber
+          else
+            echo "Error: firmware.bin not found in either build folder."
+            exit 1
+          fi
