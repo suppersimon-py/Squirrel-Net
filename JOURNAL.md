@@ -284,7 +284,5 @@ I'm now updating GitHub with the project files and finishing the hand-soldered c
 ![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjU4MSwicHVyIjoiYmxvYl9pZCJ9fQ==--b6f6dab7152a8068d2be4b4c26f610ff5f322138/image.png)
 
 I skipped the BME280 for now since it costs so much for both the raw parts, and with it I would need to upgrade the standard assembly instead of the economical, so it's a win-win budget cut.
-The current PCB/PCBA cost: ![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjU4NSwicHVyIjoiYmxvYl9pZCJ9fQ==--4ee14536f743e40b83c883e787554dfce36ce4a9/image.png)
-
-  
+The current PCB/PCBA cost: ![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjU5NCwicHVyIjoiYmxvYl9pZCJ9fQ==--83e999658b482485e17ae6e67e7de72c7ff6c05f/image.png)  
 
