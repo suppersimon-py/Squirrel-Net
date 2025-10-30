@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="https://meshtastic.org">
+  <a href="https://github.com/suppersimon-py">
     <img src=".github/SupperSimon.png" alt="SupperSimon" width="800"/>
   </a>
 
@@ -9,6 +9,9 @@
     It is designed for long-range mesh networking and can function as a client, node, or repeater in a distributed network.
   </p>
 </div>
+<a href="https://github.com/suppersimon-py">
+    <img src=".github/0000-0096.gif" width="1080"/>
+</a>
 
 <div align="left">
   <h3>Features</h3>
