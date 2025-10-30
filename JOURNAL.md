@@ -270,3 +270,21 @@ This doesn't look nearly as clean, and I think I messed up the impedance matchin
 ![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjUxNiwicHVyIjoiYmxvYl9pZCJ9fQ==--e131ac19459b47caec91c23cf8e8854f8483159f/image.png)
   
 
+## 10/29/2025 9 PM - PCB finished  
+
+PCB routing done, and PCBs BOM done.
+
+![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjU4OSwicHVyIjoiYmxvYl9pZCJ9fQ==--dc62c6136c0e1ce9a9ca453506f6765cb5923207/image.png)
+
+
+Updated the SX1262 for a more visually interesting appearance and a little more space optimization.
+
+I'm now updating GitHub with the project files and finishing the hand-soldered components selection.
+![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjU4MCwicHVyIjoiYmxvYl9pZCJ9fQ==--081a1de62036dda57f280d68fa3619e02ca5ebd6/image.png)
+![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjU4MSwicHVyIjoiYmxvYl9pZCJ9fQ==--b6f6dab7152a8068d2be4b4c26f610ff5f322138/image.png)
+
+I skipped the BME280 for now since it costs so much for both the raw parts, and with it I would need to upgrade the standard assembly instead of the economical, so it's a win-win budget cut.
+The current PCB/PCBA cost: ![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjU4NSwicHVyIjoiYmxvYl9pZCJ9fQ==--4ee14536f743e40b83c883e787554dfce36ce4a9/image.png)
+
+  
+
