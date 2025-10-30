@@ -58,7 +58,7 @@ jobs:
       - name: Add custom SquirrelCore variant
         run: |
           VARIANT_SRC="firmware/variants/SquirrelCore"
-          VARIANT_DST="meshtastic/variants/SquirrelCore"
+          VARIANT_DST="meshtastic/variants/esp32s3/SquirrelCore"
       
           if [ -d "$VARIANT_SRC" ]; then
             echo "Found SquirrelCore variant source directory."
@@ -66,18 +66,25 @@ jobs:
             cp -r "$VARIANT_SRC" "$VARIANT_DST"
             echo "Copied SquirrelCore variant to Meshtastic tree."
       
-            # If the variant has its own platformio.ini, append it to main config
+            # Append only the environment section (skip [platformio])
             if [ -f "$VARIANT_SRC/platformio.ini" ]; then
               echo "" >> meshtastic/platformio.ini
               echo "# Added by workflow for SquirrelCore" >> meshtastic/platformio.ini
-              cat "$VARIANT_SRC/platformio.ini" >> meshtastic/platformio.ini
-              echo "Appended SquirrelCore platformio.ini to meshtastic/platformio.ini"
+              # Remove lines containing '[platformio]' (and following comments)
+              awk '!/^\[platformio\]/' "$VARIANT_SRC/platformio.ini" >> meshtastic/platformio.ini
+              echo "Appended SquirrelCore environment config without duplicate [platformio] section."
             else
               echo "Warning: No platformio.ini found in SquirrelCore variant directory!"
             fi
           else
             echo "No local SquirrelCore variant found. Skipping."
           fi
+      - name: Verify SquirrelCore environment exists
+        working-directory: meshtastic
+        run: |
+          grep -q '^\[env:SquirrelCore\]' platformio.ini || (echo "Error: Missing [env:SquirrelCore] in platformio.ini" && exit 1)
+          grep -q '^\[platformio\]' platformio.ini && echo "✅ One [platformio] section present."
+          echo "Verification complete."
 
       - name: Check for SquirrelCore variant
         id: check_variant
