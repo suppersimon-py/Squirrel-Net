@@ -57,25 +57,27 @@ jobs:
 
       - name: Add custom SquirrelCore variant
         run: |
-          # Copy variant folder if it exists
-          if [ -d "firmware/variants/SquirrelCore" ]; then
-            mkdir -p meshtastic/variants/esp32s3/
-            cp -r firmware/variants/SquirrelCore meshtastic/variants/esp32s3/
-            echo "Copied SquirrelCore variant."
+          VARIANT_SRC="firmware/variants/SquirrelCore"
+          VARIANT_DST="meshtastic/variants/esp32s3/SquirrelCore"
       
-            # Append environment config
-            if [ -f "firmware/squirrelcore_env.ini" ]; then
+          if [ -d "$VARIANT_SRC" ]; then
+            echo "Found SquirrelCore variant source directory."
+            mkdir -p "$(dirname "$VARIANT_DST")"
+            cp -r "$VARIANT_SRC" "$VARIANT_DST"
+            echo "Copied SquirrelCore variant to Meshtastic tree."
+      
+            # If the variant has its own platformio.ini, append it to main config
+            if [ -f "$VARIANT_SRC/platformio.ini" ]; then
               echo "" >> meshtastic/platformio.ini
               echo "# Added by workflow for SquirrelCore" >> meshtastic/platformio.ini
-              cat firmware/squirrelcore_env.ini >> meshtastic/platformio.ini
-              echo "Appended SquirrelCore environment config."
+              cat "$VARIANT_SRC/platformio.ini" >> meshtastic/platformio.ini
+              echo "Appended SquirrelCore platformio.ini to meshtastic/platformio.ini"
             else
-              echo "Warning: firmware/squirrelcore_env.ini not found!"
+              echo "Warning: No platformio.ini found in SquirrelCore variant directory!"
             fi
           else
-            echo "No local SquirrelCore variant found."
+            echo "No local SquirrelCore variant found. Skipping."
           fi
-
 
       - name: Check for SquirrelCore variant
         id: check_variant
