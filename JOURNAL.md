@@ -211,7 +211,7 @@ Result:
 
 I figured out why Blender was crashing so much:
 ![image.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NDc5OCwicHVyIjoiYmxvYl9pZCJ9fQ==--d74f845494ebcdd5b17a31ef2ab7549ad40654a3/image.png)
-
+37K faces
   
 
 ## 10/28/2025 1 PM - Almost finished the board design  
