@@ -1,70 +1,44 @@
-#pragma once
+#define LED_PIN LED
 
-// =========================================================
-// SquirrelCore Variant Definition
-// Hardware: ESP32-S3FN8 + SX1262 + PA1010D + BME280 + OLED (HS91L02W2C01)
-// =========================================================
+#define USE_SSD1306 // Heltec_v3 has a SSD1306 display
 
-// -------------------- Board Identification --------------------
-#define VENDOR_CUSTOM
-#define BOARD_SQUIRRELCORE
-#define BOARD_NAME                  "SquirrelCore"
-#define HAS_LORA
-#define HAS_BME280
-#define HAS_GPS
-#define HAS_DISPLAY
-#define HAS_BUZZER
-#define HAS_BATTERY_MONITOR
+#define RESET_OLED RST_OLED
+#define I2C_SDA SDA_OLED // I2C pins for this board
+#define I2C_SCL SCL_OLED
 
-// -------------------- I2C Bus --------------------
-#define I2C_SDA                     8
-#define I2C_SCL                     9
+// Enable secondary bus for external periherals
+#define I2C_SDA1 SDA
+#define I2C_SCL1 SCL
 
-// Shared bus devices (different I2C addresses):
-//  - BME280:    0x76 or 0x77
-//  - GPS (PA1010D): 0x10 (default, depends on config)
-//  - OLED (HS91L02W2C01): 0x3C (typical)
+#define VEXT_ENABLE Vext // active low, powers the oled display and the lora antenna boost
+#define BUTTON_PIN 0
 
-// -------------------- LoRa (SX1262) --------------------
-#define LORA_SCK                    18
-#define LORA_MISO                   33
-#define LORA_MOSI                   17
-#define LORA_NSS                    21
-#define LORA_RESET                  36
-#define LORA_DIO1                   35
-#define LORA_BUSY                   34
-// DIO0 not required for SX1262, only DIO1 used for IRQ
+#define ADC_CTRL 37
+#define ADC_CTRL_ENABLED LOW
+#define BATTERY_PIN 1 // A battery voltage measurement pin, voltage divider connected here to measure battery voltage
+#define ADC_CHANNEL ADC1_GPIO1_CHANNEL
+#define ADC_ATTENUATION ADC_ATTEN_DB_2_5 // lower dB for high resistance voltage divider
+#define ADC_MULTIPLIER 4.9 * 1.045
 
-// -------------------- GPS (PA1010D) --------------------
-#define GPS_SDA                     I2C_SDA
-#define GPS_SCL                     I2C_SCL
-#define GPS_RESET                   -1     // Tied to 3.3V (no control)
-#define GPS_WAKE                    37
-#define GPS_POWER_EN                -1     // Always powered
+#define USE_SX1262
 
-// -------------------- Sensors --------------------
-#define BME280_SDA                  I2C_SDA
-#define BME280_SCL                  I2C_SCL
+#define LORA_DIO0 -1 // a No connect on the SX1262 module
+#define LORA_RESET 12
+#define LORA_DIO1 14 // SX1262 IRQ
+#define LORA_DIO2 13 // SX1262 BUSY
+#define LORA_DIO3    // Not connected on PCB, but internally on the TTGO SX1262, if DIO3 is high the TXCO is enabled
 
-// -------------------- Display --------------------
-#define OLED_SDA                    I2C_SDA
-#define OLED_SCL                    I2C_SCL
-#define OLED_ADDR                   0x3C   // HS91L02W2C01 typical I2C address
+#define LORA_SCK 9
+#define LORA_MISO 11
+#define LORA_MOSI 10
+#define LORA_CS 8
 
-// -------------------- Battery Sense --------------------
-#define BATTERY_SENSE_PIN           4
-#define BATTERY_DIVIDER_HIGH        220000.0f  // 220kΩ
-#define BATTERY_DIVIDER_LOW         100000.0f  // 100kΩ
-#define BATTERY_VREF                3.3f
-// Voltage divider output = Vbat * (Rlow / (Rhigh + Rlow))
+#define SX126X_CS LORA_CS
+#define SX126X_DIO1 LORA_DIO1
+#define SX126X_BUSY LORA_DIO2
+#define SX126X_RESET LORA_RESET
 
-// -------------------- Indicators --------------------
-#define LED_PIN                     14
-#define LED_ACTIVE_LEVEL            HIGH
+#define SX126X_DIO2_AS_RF_SWITCH
+#define SX126X_DIO3_TCXO_VOLTAGE 1.8
 
-// -------------------- Buzzer --------------------
-#define BUZZER_PIN                  38
-#define BUZZER_ACTIVE_LEVEL         HIGH
-
-// -------------------- Helper Macros --------------------
-#define UNUSED_PIN                  (-1)
+#define HAS_32768HZ 1
