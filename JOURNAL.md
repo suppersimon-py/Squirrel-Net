@@ -286,3 +286,20 @@ I'm now updating GitHub with the project files and finishing the hand-soldered c
 I skipped the BME280 for now since it costs so much for both the raw parts, and with it I would need to upgrade the standard assembly instead of the economical, so it's a win-win budget cut.
 The current PCB/PCBA cost: ![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjU5NCwicHVyIjoiYmxvYl9pZCJ9fQ==--83e999658b482485e17ae6e67e7de72c7ff6c05f/image.png)  
 
+## 10/31/2025 - Almost Finished  
+
+I have finished the bill of materials and got the final quotes for a minimum of 2 PCBA. To optimize cost, I omitted the BME280 in the PCBA.
+
+I know it's more expensive, but I don't like the idea of cheaping out on batteries, so the few small components I'm not getting in the PCBA I'm getting off DigiKey instead of someplace cheaper.
+
+While doing all this, I realized I had flipped the display pin header, so I fixed that. I'm really glad I caught that.
+
+Estimated 141.07$ for 2 (cost optimized) boards
+![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjkxMSwicHVyIjoiYmxvYl9pZCJ9fQ==--0419455808bc9b67374301dcd7b76e4dbfb0a642/image.png)
+![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjkxMiwicHVyIjoiYmxvYl9pZCJ9fQ==--986973268908b8da8cb7ebdaac1f4f6df75bb542/image.png)
+
+
+
+[bom](/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjkxMCwicHVyIjoiYmxvYl9pZCJ9fQ==--7b749d395276e4396c85c1e358290123d889f8ab/bom.csv)
+  
+
