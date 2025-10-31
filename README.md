@@ -22,7 +22,7 @@
     My plans are to not just stop on the PCB design but to also design a case around it, I have some basic blender skills to work with however it will still be a very diffrent work flow to what I've done before.
   </p>
   <p>
-    I also need to update and test the firmware, right now I'm using a slightly modifyed version on the Heltec V3 veriant files
+    I also need to update and test the firmware.
   </p>
 
 <div align="left">
