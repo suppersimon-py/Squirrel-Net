@@ -294,9 +294,10 @@ I know it's more expensive, but I don't like the idea of cheaping out on batteri
 
 While doing all this, I realized I had flipped the display pin header, so I fixed that. I'm really glad I caught that.
 
-Estimated 141.07$ for 2 (cost optimized) boards
+Estimated 161.18$ for 2 (cost optimized) boards
 ![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjkxMSwicHVyIjoiYmxvYl9pZCJ9fQ==--0419455808bc9b67374301dcd7b76e4dbfb0a642/image.png)
-![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjkxMiwicHVyIjoiYmxvYl9pZCJ9fQ==--986973268908b8da8cb7ebdaac1f4f6df75bb542/image.png)
+![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6Njk3NSwicHVyIjoiYmxvYl9pZCJ9fQ==--aa64630bbe83ea516bf527d2f5c443e990d34b2f/image.png)
+
 
 
 
