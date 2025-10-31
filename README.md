@@ -5,13 +5,25 @@
 
   <h2>Squirrel-Core</h2>
   <p>
-    <strong>SquirrelCore</strong> is an open-source PCB built around the <strong>ESP32-S3</strong> and <strong>SX1262</strong>. 
-    It is designed for long-range mesh networking using the Meshtastic Firmware and can function as a client, node, or repeater in a distributed network.
+    <strong>SquirrelCore</strong> is an open-source PCB built around the <strong>ESP32-S3</strong> and <strong>SX1262</strong>.
+    It is designed for long-range mesh networking using the open-source 
+    <a href="https://meshtastic.org" target="_blank" rel="noopener noreferrer">Meshtastic</a> firmware.
+    It can function as a client, node, or repeater in a distributed network.
   </p>
 </div>
 <a href="https://github.com/suppersimon-py">
     <img src=".github/0000-0096.gif" width="1080"/>
 </a>
+  <p>
+    I wanted to design this as a challenge and a learning expirence on radio circuity for some time now, but without the funding (I'm kinda broke rn) this idea of mine wouldn't come to reality.
+  </p>
+  <h3>Continuing the development process</h3>
+  <p>
+    My plans are to not just stop on the PCB design but to also design a case around it, I have some basic blender skills to work with however it will still be a very diffrent work flow to what I've done before.
+  </p>
+  <p>
+    I also need to update and test the firmware, right now I'm using a slightly modifyed version on the Heltec V3 veriant files
+  </p>
 
 <div align="left">
   <h3>Features</h3>
