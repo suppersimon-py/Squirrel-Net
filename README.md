@@ -4,6 +4,7 @@
   </a>
 
   <h2>Squirrel-Core</h2>
+  <h2>NOT FINISHED</h2>
   <p>
     <strong>SquirrelCore</strong> is an open-source PCB built around the <strong>ESP32-S3</strong> and <strong>SX1262</strong>.
     It is designed for long-range mesh networking using the open-source 
@@ -19,10 +20,14 @@
   </p>
   <h3>Continuing the development process</h3>
   <p>
-    My plans are to not just stop on the PCB design but to also design a case around it, I have some basic blender skills to work with however it will still be a very diffrent work flow to what I've done before.
+    My plans are to not just stop on the PCB design but to also design a case around it. I am a visual modeler, I can't start work on the case until i have it in hand and can mesure and test fit,
+    But I can assure I do have intresting design ideas for it. 
   </p>
   <p>
-    I also need to update and test the firmware.
+    Currently I have a github workflow that will automatically update, build, and release new versions of the meshtaic firmware to the realses page.
+  </p>
+  <p>
+    I also need to fix somethings and test the actual firmware firmware.
   </p>
 
 <div align="left">
